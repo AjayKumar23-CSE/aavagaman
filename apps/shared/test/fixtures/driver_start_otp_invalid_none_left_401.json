@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "OTP_INVALID",
+    "message": "Wrong OTP. No attempts left."
+  }
+}

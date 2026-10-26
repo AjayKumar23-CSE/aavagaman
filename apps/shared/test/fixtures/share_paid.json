@@ -1,0 +1,25 @@
+{
+  "status": "PAID",
+  "driver_name": "Phase Two Driver",
+  "vehicle": {
+    "reg_number": "DL01CP2002",
+    "make": "Maruti Suzuki",
+    "model": "Dzire",
+    "colour": "White"
+  },
+  "current_location": null,
+  "eta_s": null,
+  "pickup": {
+    "lat": 28.6315,
+    "lng": 77.2167,
+    "address": "Connaught Place, New Delhi"
+  },
+  "drop": {
+    "lat": 28.6129,
+    "lng": 77.2295,
+    "address": "India Gate, New Delhi"
+  },
+  "started_at": "2026-10-04T06:38:49.623Z",
+  "completed_at": "2026-10-04T06:39:01.681Z",
+  "updated_at": "2026-10-04T06:39:01.871Z"
+}

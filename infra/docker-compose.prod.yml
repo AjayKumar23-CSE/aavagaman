@@ -1,0 +1,125 @@
+# Production stack (SPEC §17.2). Lives at /opt/ride-platform on the VPS.
+#   cp infra/docker-compose.prod.yml /opt/ride-platform/docker-compose.yml
+#   cp infra/Caddyfile /opt/ride-platform/Caddyfile
+#   # /opt/ride-platform/.env holds the backend variables (never in git)
+#   docker compose pull && docker compose up -d
+# Staging (SPEC §17.6): same file, `docker compose -p ride-staging --env-file .env.staging up -d`
+# with API_DOMAIN=api-staging.example.com and different host ports.
+name: ride
+
+x-api-image: &api-image ${API_IMAGE:-ghcr.io/your-org/ride-platform/api:latest}
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: always
+    ports: ["80:80", "443:443"]
+    environment:
+      API_DOMAIN: ${API_DOMAIN:-api.example.com}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on: [api]
+
+  api:
+    image: *api-image
+    restart: always
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      DATABASE_URL: postgresql://ride:${POSTGRES_PASSWORD}@postgres:5432/ride
+      REDIS_URL: redis://redis:6379
+      OSRM_BASE_URL: http://osrm:5000
+    expose: ["3000"]
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 20s
+    logging: &logging
+      driver: json-file
+      options: { max-size: "20m", max-file: "5" }
+
+  worker:
+    image: *api-image
+    command: ["node", "dist/worker.js"]
+    restart: always
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://ride:${POSTGRES_PASSWORD}@postgres:5432/ride
+      REDIS_URL: redis://redis:6379
+      OSRM_BASE_URL: http://osrm:5000
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    logging: *logging
+
+  postgres:
+    image: postgis/postgis:16-3.4
+    restart: always
+    shm_size: 256m
+    environment:
+      POSTGRES_USER: ride
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ride
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ride -d ride"]
+      interval: 10s
+      retries: 10
+    logging: *logging
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "256mb", "--maxmemory-policy", "noeviction"]
+    volumes: [redisdata:/data]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      retries: 10
+    logging: *logging
+
+  osrm:
+    image: osrm/osrm-backend
+    restart: always
+    command: ["osrm-routed", "--algorithm", "mld", "--max-table-size", "100", "/data/ncr.osrm"]
+    volumes: [osrm-data:/data]   # filled by infra/osrm/prepare.sh (SPEC §17.3)
+    deploy:
+      resources:
+        limits: { memory: 1536M }
+    mem_limit: 1536m
+    logging: *logging
+
+  backup:
+    build: ./backup
+    image: ride-backup:local
+    restart: always
+    environment:
+      TZ: Asia/Kolkata
+      PGHOST: postgres
+      PGUSER: ride
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+      PGDATABASE: ride
+      S3_ENDPOINT: ${S3_ENDPOINT}
+      S3_BUCKET: ${BACKUP_BUCKET:-ride-docs}
+      AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY}
+      RETENTION_DAYS: "30"
+    depends_on:
+      postgres: { condition: service_healthy }
+    logging: *logging
+
+volumes:
+  pgdata:
+  redisdata:
+  osrm-data:
+  caddy_data:
+  caddy_config:

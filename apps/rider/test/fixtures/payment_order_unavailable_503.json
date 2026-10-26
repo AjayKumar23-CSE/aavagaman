@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "PAYMENTS_UNAVAILABLE",
+    "message": "Online payments are not configured"
+  }
+}

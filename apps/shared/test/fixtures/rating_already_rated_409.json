@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "ALREADY_RATED",
+    "message": "You have already rated this ride"
+  }
+}

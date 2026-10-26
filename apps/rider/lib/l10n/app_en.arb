@@ -1,0 +1,404 @@
+{
+  "@@locale": "en",
+  "appTitle": "Aavagaman",
+  "appTagline": "Safar • Aapke Saath",
+  "splashQuote": "Har safar ka apna ek maqsad hota hai.",
+  "homeWhereTo": "Where to?",
+  "homeCurrentLocation": "Current location",
+  "homeLocationDenied": "Location is off, so the map shows Connaught Place. Allow location to book from where you are.",
+  "homeLocationUnavailable": "Couldn't find you yet, so the map shows Connaught Place. Step outside or near a window and retry.",
+  "homeOpenSettings": "Open settings",
+  "homeAllowLocation": "Allow location",
+  "homeNearbyCars": "{count, plural, =0{No cars nearby right now} =1{1 car nearby} other{{count} cars nearby}}",
+  "@homeNearbyCars": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchTitle": "Set drop location",
+  "searchHint": "Search for a place or address",
+  "searchMinChars": "Type at least 3 characters",
+  "searchNoResults": "No places found",
+  "searchUnavailable": "Place search isn't set up on this build. Type the address, then set the location on the map.",
+  "searchSetOnMap": "Set location on map",
+  "searchRecent": "Recent",
+  "searchUseTyped": "Use \"{text}\" and set location on map",
+  "@searchUseTyped": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "pickTitleDrop": "Set drop on map",
+  "pickTitlePickup": "Set pickup on map",
+  "pickHint": "Move the map until the pin is on the exact spot.",
+  "pickAddressLabel": "Address or landmark",
+  "pickConfirm": "Confirm location",
+  "pickPinnedAddress": "Pinned location ({lat}, {lng})",
+  "@pickPinnedAddress": {
+    "placeholders": {
+      "lat": {
+        "type": "String"
+      },
+      "lng": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmTitle": "Confirm your ride",
+  "confirmPickup": "Pickup",
+  "confirmDrop": "Drop",
+  "confirmChange": "Change",
+  "confirmEstimating": "Getting your fare…",
+  "confirmFareLabel": "Estimated fare",
+  "confirmTripMeta": "{distance} · about {duration}",
+  "@confirmTripMeta": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "vehicleBike": "Bike",
+  "vehicleAuto": "Auto",
+  "vehicleMini": "Mini",
+  "vehicleSedan": "Sedan",
+  "vehicleSeats": "{count, plural, =1{1 seat} other{up to {count} seats}}",
+  "@vehicleSeats": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "confirmPayment": "Payment",
+  "confirmPayCash": "Cash",
+  "confirmPayOnline": "Pay online",
+  "confirmOutOfArea": "Your drop is outside our service area. The ride can be booked, but the final fare may differ from this estimate.",
+  "confirmBook": "Book ride",
+  "confirmFareChanged": "Fares were updated. Here is a fresh estimate.",
+  "findingTitle": "Finding your driver",
+  "findingSubtitle": "We're asking nearby drivers. This usually takes under a minute.",
+  "findingStillLooking": "Still looking… hang on a moment.",
+  "findingCancel": "Cancel ride",
+  "findingCancelTitle": "Cancel this ride?",
+  "findingCancelBody": "You can book again any time.",
+  "findingKeep": "Keep looking",
+  "findingConfirmCancel": "Yes, cancel",
+  "rideCancelled": "Your ride was cancelled",
+  "rideCancelledWithFee": "Your ride was cancelled. A {fee} cancellation fee will be added to your next trip.",
+  "@rideCancelledWithFee": {
+    "placeholders": {
+      "fee": {
+        "type": "String"
+      }
+    }
+  },
+  "assignedOnTheWay": "Your driver is on the way",
+  "assignedArrived": "Your driver has arrived",
+  "assignedEta": "Arriving in {duration}",
+  "@assignedEta": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "assignedEtaUnknown": "Calculating arrival time…",
+  "assignedOtpLabel": "Trip OTP",
+  "assignedOtpHint": "Share this code with your driver only when you get in.",
+  "assignedCall": "Call",
+  "assignedCallHint": "Calling unlocks when your driver arrives",
+  "assignedCallViaHint": "Calls go through Aavagaman's number, so your number stays private",
+  "callConnecting": "Calling you from {number}. Pick up to talk to your driver.",
+  "@callConnecting": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "callFailed": "Couldn't connect the call. Please try again.",
+  "assignedShare": "Share trip",
+  "assignedSos": "SOS",
+  "assignedCancel": "Cancel ride",
+  "assignedCancelTitle": "Cancel this ride?",
+  "assignedCancelBody": "Your driver is already on the way.",
+  "assignedCancelFeeWarning": "It's been more than 2 minutes since your driver accepted, so a cancellation fee may apply.",
+  "assignedRating": "{rating} ★",
+  "@assignedRating": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      }
+    }
+  },
+  "statusPaid": "Payment received",
+  "statusNoDriver": "No drivers available",
+  "statusNoDriverBody": "No drivers are available right now. Please try again in a few minutes.",
+  "statusCancelledBody": "This ride was cancelled.",
+  "statusCancelledReason": "Reason: {reason}",
+  "@statusCancelledReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "statusCancellationFee": "Cancellation fee: {fee}",
+  "@statusCancellationFee": {
+    "placeholders": {
+      "fee": {
+        "type": "String"
+      }
+    }
+  },
+  "backToHome": "Back to home",
+  "done": "Done",
+  "shareText": "Track my ride live: {url}",
+  "@shareText": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "shareSubject": "My ride",
+  "shareUnavailable": "Sharing isn't available right now.",
+  "sosTitle": "Emergency SOS",
+  "sosBody": "This will call 112 and alert our safety team with your location.",
+  "sosConfirm": "Call 112",
+  "sosAlerted": "Our team has been alerted",
+  "sosFailed": "We couldn't alert our team. If you are in danger, call 112.",
+  "tripTitle": "Trip in progress",
+  "tripHeading": "Heading to {drop}",
+  "@tripHeading": {
+    "placeholders": {
+      "drop": {
+        "type": "String"
+      }
+    }
+  },
+  "tripEstimate": "Estimated fare {range}",
+  "@tripEstimate": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      }
+    }
+  },
+  "payTitle": "Trip completed",
+  "payTripStats": "{distance} · {duration}",
+  "@payTripStats": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "payFare": "Trip fare",
+  "payFareInclGst": "Includes {gst} GST",
+  "@payFareInclGst": {
+    "placeholders": {
+      "gst": {
+        "type": "String"
+      }
+    }
+  },
+  "payCancellationFee": "Cancellation fee (earlier ride)",
+  "payTotal": "Total",
+  "payCashInstruction": "Pay {amount} cash to your driver",
+  "@payCashInstruction": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payCashWaiting": "Waiting for your driver to confirm…",
+  "payCashAfterOnlineNote": "Because an online payment was started, your driver can confirm cash after a few minutes.",
+  "payOnlineButton": "Pay {amount} online",
+  "@payOnlineButton": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payOnlineOpening": "Opening payment…",
+  "payOnlineVerifying": "Confirming your payment…",
+  "payDescription": "Ride to {drop}",
+  "@payDescription": {
+    "placeholders": {
+      "drop": {
+        "type": "String"
+      }
+    }
+  },
+  "payFailedBody": "The payment didn't go through.",
+  "payCancelled": "You cancelled the payment.",
+  "payVerifyFailed": "We couldn't confirm the payment yet. If money was deducted it will be confirmed automatically within a few minutes.",
+  "payRetry": "Try again",
+  "paySwitchToCash": "Pay cash to the driver instead",
+  "payUnavailable": "Online payment isn't available right now. Please pay cash.",
+  "payReceiptFailed": "Couldn't load the fare breakdown.",
+  "rateTitle": "How was your trip?",
+  "rateSubtitle": "Rate your ride with {driver}",
+  "@rateSubtitle": {
+    "placeholders": {
+      "driver": {
+        "type": "String"
+      }
+    }
+  },
+  "ratePaidAmount": "{amount} paid. Thanks for riding with us.",
+  "@ratePaidAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "rateCommentLabel": "Add a comment (optional)",
+  "rateSubmit": "Submit rating",
+  "rateSkip": "Skip",
+  "rateThanks": "Thanks for your feedback",
+  "rateStars": "{n, plural, =1{1 star} other{{n} stars}}",
+  "@rateStars": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "menuHistory": "Ride history",
+  "historyTitle": "Ride history",
+  "historyEmpty": "No rides yet. Your trips will appear here.",
+  "historyLoadMore": "Load more",
+  "historyLoadFailed": "Couldn't load your rides.",
+  "detailTitle": "Ride details",
+  "detailTimeline": "Timeline",
+  "detailReceipt": "Receipt",
+  "detailCancelledBy": "Cancelled by {actor}",
+  "@detailCancelledBy": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "detailFeeCarriedNote": "Added to your next completed ride.",
+  "detailPaidWith": "Paid · {method}",
+  "@detailPaidWith": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "detailPaymentPending": "Payment pending · {method}",
+  "@detailPaymentPending": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "detailRate": "Rate this ride",
+  "detailAlreadyRated": "You've already rated this ride.",
+  "statusLabelRequested": "Requested",
+  "statusLabelAccepted": "Driver assigned",
+  "statusLabelArrived": "Driver arrived",
+  "statusLabelStarted": "Trip started",
+  "statusLabelCompleted": "Completed",
+  "statusLabelPaid": "Paid",
+  "statusLabelCancelled": "Cancelled",
+  "statusLabelNoDriver": "No driver found",
+  "actorRider": "you",
+  "actorDriver": "the driver",
+  "actorAdmin": "support",
+  "actorSystem": "the system",
+  "paymentCash": "Cash",
+  "paymentOnline": "Online",
+  "paidWithUpi": "UPI",
+  "paidWithCard": "Card",
+  "paidWithWallet": "Wallet",
+  "rideLoadFailed": "Couldn't load your ride.",
+  "reconnecting": "Reconnecting…",
+  "phoneTitle": "Enter your mobile number",
+  "phoneSubtitle": "We'll send you a 6-digit code to log in.",
+  "phoneConsent": "We'll text you a one-time code. Standard SMS charges may apply.",
+  "phoneLabel": "Mobile number",
+  "invalidPhone": "Enter a valid 10-digit Indian mobile number",
+  "continueLabel": "Continue",
+  "otpTitle": "Enter the code",
+  "otpSubtitle": "Sent by SMS to {phone}",
+  "@otpSubtitle": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "resendIn": "Resend code in {time}",
+  "@resendIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "resend": "Resend code",
+  "codeResent": "A new code is on its way",
+  "changeNumber": "Change number",
+  "retry": "Retry",
+  "networkError": "Can't reach the server. Check your connection and try again.",
+  "genericError": "Something went wrong. Please try again.",
+  "nameTitle": "What's your name?",
+  "nameSubtitle": "Your driver will see this name.",
+  "nameLabel": "Full name",
+  "nameRequired": "Enter your name",
+  "homeGreeting": "Hi {name}",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "menuProfile": "Profile",
+  "menuHelp": "Help & support",
+  "menuPrivacy": "Privacy policy",
+  "menuLogout": "Log out",
+  "menuDeleteAccount": "Delete account",
+  "profileTitle": "Profile",
+  "emailLabel": "Email (optional)",
+  "invalidEmail": "Enter a valid email address",
+  "phoneReadOnly": "Mobile number",
+  "save": "Save",
+  "profileSaved": "Profile updated",
+  "helpTitle": "Help & support",
+  "helpIntro": "Need help with a ride or your account? Contact us:",
+  "helpPhoneLabel": "Phone",
+  "helpPhone": "+91 00000 00000",
+  "helpEmailLabel": "Email",
+  "helpEmail": "support@example.com",
+  "helpHours": "Support hours: 8 am – 10 pm IST, every day.",
+  "privacyTitle": "Privacy policy",
+  "privacyBody": "This is a placeholder privacy policy. The final policy will explain what we collect (your mobile number, name, optional email, ride locations and payment records), why we collect it (to arrange and bill rides, keep riders and drivers safe, and meet legal requirements), how long we keep it, and how to ask for a copy or deletion of your data.\n\nYou can delete your account at any time from the menu. Your personal details are then removed; ride records are kept in anonymised form for accounting.",
+  "logoutConfirmTitle": "Log out?",
+  "logoutConfirmBody": "You'll need a new code to log in again.",
+  "deleteConfirmTitle": "Delete your account?",
+  "deleteConfirmBody": "Your name, number and email will be removed and you will be logged out. Past rides are kept in anonymised form for accounting. This cannot be undone.",
+  "deleteConfirmAction": "Delete",
+  "cancel": "Cancel"
+}

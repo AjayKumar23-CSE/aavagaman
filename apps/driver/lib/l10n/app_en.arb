@@ -1,0 +1,436 @@
+{
+  "@@locale": "en",
+  "appTitle": "Aavagaman Driver",
+  "appTagline": "Safar • Aapke Saath",
+  "splashQuote": "Har safar ka apna ek maqsad hota hai.",
+  "homeStatusOffline": "You're offline",
+  "homeStatusGoingOnline": "Going online…",
+  "homeStatusOnline": "You're online",
+  "homeStatusReconnecting": "Reconnecting…",
+  "homeStatusGoingOffline": "Going offline…",
+  "homeOfflineHint": "Switch on to start receiving ride requests.",
+  "homeOnlineHint": "Stay on this screen or lock your phone — requests will ring.",
+  "homeReconnectingHint": "Connection lost. We'll put you back online automatically.",
+  "homeOnTripHint": "You're on a trip. Finish it before going offline.",
+  "homeSwitchLabel": "Online",
+  "homeViewTrip": "View current trip",
+  "homeTodayEarnings": "Today's earnings",
+  "homeEarningsNote": "After commission and GST",
+  "homeLocationDenied": "Allow location access to go online.",
+  "homeBackgroundLocationDenied": "Allow location access \"All the time\" so ride requests reach you while the screen is off.",
+  "homeNotificationsDenied": "Allow notifications so you hear ride requests.",
+  "homeLocationServiceOff": "Turn on location services to go online.",
+  "homeNoFix": "Couldn't get your location. Move to an open area and try again.",
+  "homeOpenSettings": "Open settings",
+  "homeBatteryMenu": "Battery settings",
+  "homeLocate": "My location",
+  "onlineNotificationTitle": "You are online",
+  "onlineNotificationBody": "Receiving ride requests nearby",
+  "channelRidesName": "Ride requests",
+  "channelRidesDescription": "New ride requests (rings loudly)",
+  "channelPresenceName": "Online status",
+  "channelPresenceDescription": "Shown while you are online",
+  "offerTitle": "New ride request",
+  "offersTitle": "{count, plural, =1{New ride request} other{{count} ride requests}}",
+  "@offersTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "offerPickup": "Pickup",
+  "offerDrop": "Drop",
+  "offerDistance": "{distance} to pickup",
+  "@offerDistance": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "offerFare": "Fare {range}",
+  "@offerFare": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      }
+    }
+  },
+  "offerAccept": "Accept",
+  "offerReject": "Reject",
+  "offerExpired": "This request has expired",
+  "offerAccepting": "Accepting…",
+  "offerNotificationBody": "{pickup} · tap to view",
+  "@offerNotificationBody": {
+    "placeholders": {
+      "pickup": {
+        "type": "String"
+      }
+    }
+  },
+  "tripTitle": "Navigate to pickup",
+  "tripRider": "Rider",
+  "tripPickup": "Pickup",
+  "tripDrop": "Drop",
+  "tripNavigate": "Navigate",
+  "tripCall": "Call",
+  "tripCallHint": "Calling unlocks when you arrive",
+  "tripCallVia": "Call via Aavagaman",
+  "tripNumberPrivate": "Number private · calls go via Aavagaman",
+  "callConnecting": "Calling you from {number}. Pick up to talk to the rider.",
+  "@callConnecting": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "callFailed": "Couldn't connect the call. Please try again.",
+  "tripArrived": "Arrived",
+  "tripStart": "Start trip",
+  "tripEnd": "End trip",
+  "tripStatusAccepted": "Head to the pickup",
+  "tripStatusArrived": "You're at the pickup — waiting for the rider",
+  "tripStatusStarted": "Trip in progress",
+  "tripStatusCompleted": "Trip completed — collect the fare",
+  "tripFare": "Fare {range}",
+  "@tripFare": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      }
+    }
+  },
+  "tripReassigned": "This ride was reassigned to another driver.",
+  "tripCancelledByRider": "The rider cancelled this ride.",
+  "tripEnded": "This ride has ended.",
+  "backToHome": "Back to home",
+  "tripNavigateFailed": "Couldn't open a navigation app.",
+  "tripTitleOnTrip": "On trip",
+  "tripTitlePayment": "Collect payment",
+  "tripTitleRate": "Rate the rider",
+  "tripStepPickup": "Pickup",
+  "tripStepTrip": "Trip",
+  "tripStepPayment": "Payment",
+  "tripNavigateToDrop": "Navigate to drop",
+  "tripOtpLabel": "Rider's 4-digit OTP",
+  "tripOtpHint": "Ask the rider for the code shown in their app.",
+  "tripEndConfirmTitle": "End the trip?",
+  "tripEndConfirmBody": "End the trip only when the rider has reached the drop.",
+  "tripCancel": "Cancel ride",
+  "tripLocationUnavailable": "Couldn't get your location. Check that GPS is on and try again.",
+  "tripYouCancelled": "You cancelled this ride. It has gone back to other drivers.",
+  "tripNoShowCancelled": "Ride cancelled as a rider no-show. The rider will be charged the cancellation fee.",
+  "cancelTitle": "Why are you cancelling?",
+  "cancelWarning": "Cancellations count against you: three in a day pauses your account.",
+  "cancelReasonVehicleBreakdown": "Vehicle breakdown",
+  "cancelReasonRiderNotReachable": "Rider not reachable",
+  "cancelReasonRiderNoShow": "Rider didn't show up",
+  "cancelReasonWrongPickup": "Wrong pickup location",
+  "cancelReasonOther": "Other",
+  "cancelNoShowWait": "Available after waiting {minutes} min at the pickup",
+  "@cancelNoShowWait": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "cancelOtherHint": "Tell us what happened",
+  "cancelConfirm": "Cancel ride",
+  "cancelKeep": "Keep ride",
+  "paymentAmountDue": "Amount to collect",
+  "paymentFare": "Trip fare",
+  "paymentPreviousFee": "Earlier cancellation fee",
+  "paymentTrip": "{distance} · {duration}",
+  "@paymentTrip": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMethodCash": "Rider pays cash",
+  "paymentMethodOnline": "Rider pays online",
+  "paymentCashCollected": "Cash collected",
+  "paymentCashConfirmTitle": "Cash collected?",
+  "paymentCashConfirmBody": "Confirm you received {amount} in cash from the rider.",
+  "@paymentCashConfirmBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentWaitingOnline": "Waiting for the rider's online payment…",
+  "paymentOnlineFallback": "If the rider pays you in cash instead, tap Cash collected once you have it.",
+  "paymentReceived": "Payment received",
+  "rateTitle": "How was the rider?",
+  "rateSubmit": "Submit",
+  "rateSkip": "Skip",
+  "rateFailed": "Couldn't send your rating.",
+  "sosTooltip": "SOS",
+  "sosTitle": "Emergency?",
+  "sosBody": "This calls 112 and alerts our support team with your location.",
+  "sosConfirm": "Call 112",
+  "sosAlerted": "Our support team has been alerted.",
+  "sosFailed": "Couldn't alert the support team. Call 112 if you haven't already.",
+  "menuEarnings": "Earnings",
+  "menuHistory": "Trip history",
+  "earningsTitle": "Earnings",
+  "earningsToday": "Today",
+  "earningsWeek": "This week",
+  "earningsTrips": "{count, plural, =1{1 trip} other{{count} trips}}",
+  "@earningsTrips": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "earningsNet": "You earn",
+  "earningsGross": "Fares",
+  "earningsCommission": "Commission",
+  "earningsGst": "GST",
+  "earningsCash": "Cash collected",
+  "earningsOnline": "Paid online",
+  "earningsRecent": "Recent trips",
+  "earningsSettlementNote": "Settlements are prepared every Monday for the previous week (Monday–Sunday).",
+  "earningsTripLine": "Fare {fare} · Commission {commission} · GST {gst}",
+  "@earningsTripLine": {
+    "placeholders": {
+      "fare": {
+        "type": "String"
+      },
+      "commission": {
+        "type": "String"
+      },
+      "gst": {
+        "type": "String"
+      }
+    }
+  },
+  "loadFailed": "Couldn't load this. Check your connection.",
+  "historyTitle": "Trip history",
+  "historyEmpty": "No trips yet.",
+  "historyLoadMore": "Load more",
+  "historyStatusPaid": "Paid",
+  "historyStatusCompleted": "Awaiting payment",
+  "historyStatusCancelled": "Cancelled",
+  "historyStatusActive": "In progress",
+  "historyCancelledByYou": "Cancelled by you",
+  "historyCancelledByRider": "Cancelled by the rider",
+  "historyCancelledByAdmin": "Cancelled by support",
+  "batteryTitle": "Keep ride requests coming",
+  "batteryIntro": "Android may put this app to sleep while your screen is off, so ride requests stop arriving. Turn off battery optimisation for Ride Driver once.",
+  "batteryGenericSteps": "Open the battery settings for Ride Driver and choose \"Don't optimise\" or \"Unrestricted\".",
+  "batteryBrandNote": "On your {brand} phone:",
+  "@batteryBrandNote": {
+    "placeholders": {
+      "brand": {
+        "type": "String"
+      }
+    }
+  },
+  "batteryXiaomi": "Settings → Apps → Manage apps → Ride Driver → Battery saver: No restrictions. Also enable Autostart, and lock the app in Recents (pull down on its card).",
+  "batteryVivo": "Settings → Battery → Background power consumption management → Ride Driver: Allow. Also enable Autostart under i Manager → App manager.",
+  "batteryOppo": "Settings → Battery → More settings → Optimise battery use → Ride Driver: Don't optimise. Enable \"Allow auto startup\" under App management.",
+  "batteryRealme": "Settings → Battery → App battery management → Ride Driver: Allow background activity. Enable auto startup under App management.",
+  "batterySamsung": "Settings → Apps → Ride Driver → Battery: Unrestricted. In Settings → Battery → Background usage limits, make sure Ride Driver is not in \"Sleeping apps\".",
+  "batteryOpenSettings": "Open battery settings",
+  "batteryOpenAppSettings": "Open app settings",
+  "batteryDone": "Done",
+  "batteryLater": "Later",
+  "phoneTitle": "Enter your mobile number",
+  "phoneSubtitle": "We'll send you a 6-digit code to log in or sign up as a driver.",
+  "phoneConsent": "We'll text you a one-time code. Standard SMS charges may apply.",
+  "phoneLabel": "Mobile number",
+  "invalidPhone": "Enter a valid 10-digit Indian mobile number",
+  "continueLabel": "Continue",
+  "otpTitle": "Enter the code",
+  "otpSubtitle": "Sent by SMS to {phone}",
+  "@otpSubtitle": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "resendIn": "Resend code in {time}",
+  "@resendIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "resend": "Resend code",
+  "codeResent": "A new code is on its way",
+  "changeNumber": "Change number",
+  "retry": "Retry",
+  "networkError": "Can't reach the server. Check your connection and try again.",
+  "genericError": "Something went wrong. Please try again.",
+  "cancel": "Cancel",
+  "save": "Save",
+  "homeGreeting": "Hi {name}",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDocsAttention": "Some documents need attention before you can go online.",
+  "homeDocsAction": "View documents",
+  "registerTitle": "Your details",
+  "registerIntro": "Tell us about you and your car. You'll upload documents next.",
+  "registerRejected": "Your application was not approved. Please correct your details and submit again.",
+  "reviewerNoteLabel": "Note from our team: {note}",
+  "@reviewerNoteLabel": {
+    "placeholders": {
+      "note": {
+        "type": "String"
+      }
+    }
+  },
+  "sectionDriver": "Driver",
+  "sectionVehicle": "Vehicle",
+  "vehicleTypeLabel": "Vehicle type",
+  "vehicleBike": "Bike",
+  "vehicleAuto": "Auto",
+  "vehicleMini": "Mini",
+  "vehicleSedan": "Sedan",
+  "nameLabel": "Full name (as on licence)",
+  "licenceNoLabel": "Driving licence number",
+  "licenceExpiryLabel": "Licence valid until",
+  "dateOfBirthLabel": "Date of birth (as on your licence)",
+  "dateOfBirthTooYoung": "You must be at least 18 years old to drive",
+  "regNumberLabel": "Registration number",
+  "regNumberHint": "DL01AB1234",
+  "makeLabel": "Make",
+  "makeHint": "Maruti Suzuki",
+  "modelLabel": "Model",
+  "modelHint": "Dzire",
+  "colourLabel": "Colour",
+  "fuelLabel": "Fuel type",
+  "fuelPetrol": "Petrol",
+  "fuelDiesel": "Diesel",
+  "fuelCng": "CNG",
+  "fuelEv": "Electric",
+  "fieldRequired": "Required",
+  "invalidLicenceNo": "8–20 letters and digits",
+  "invalidRegNumber": "Looks like DL01AB1234",
+  "dateExpired": "This date has already passed",
+  "selectDate": "Select date",
+  "submit": "Submit",
+  "documentsTitle": "Documents",
+  "documentsIntro": "Upload a clear photo of each document. We'll review them within 1–2 working days.",
+  "docDrivingLicence": "Driving licence",
+  "docRc": "Registration certificate (RC)",
+  "docInsurance": "Vehicle insurance",
+  "docPermit": "Permit",
+  "docIdProof": "ID proof (Aadhaar, PAN or voter ID)",
+  "docSelfie": "Selfie",
+  "docFitness": "Fitness certificate",
+  "docOptional": "Optional",
+  "docStatusNotUploaded": "Not uploaded",
+  "docStatusPending": "Under review",
+  "docStatusApproved": "Approved",
+  "docStatusRejected": "Rejected",
+  "docStatusExpired": "Expired",
+  "docExpires": "Valid until {date}",
+  "@docExpires": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "docUpload": "Upload",
+  "docReupload": "Re-upload",
+  "documentsContinue": "Continue",
+  "documentsRemaining": "{count, plural, =1{1 document left to upload} other{{count} documents left to upload}}",
+  "@documentsRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "uploadTitle": "Upload {doc}",
+  "@uploadTitle": {
+    "placeholders": {
+      "doc": {
+        "type": "String"
+      }
+    }
+  },
+  "uploadHintSelfie": "Take a clear photo of your face in good light. No sunglasses or cap.",
+  "uploadHintDocument": "Place the document on a flat surface. All four corners and the text must be readable.",
+  "uploadCamera": "Camera",
+  "uploadGallery": "Gallery",
+  "uploadExpiryLabel": "Valid until",
+  "uploadIdLast4Label": "Last 4 digits of the ID number",
+  "uploadIdLast4Help": "We only store the last 4 digits.",
+  "uploadIdLast4Invalid": "Enter exactly 4 digits",
+  "uploadPickFirst": "Take or choose a photo first",
+  "uploadPreparing": "Preparing photo…",
+  "uploadSending": "Uploading…",
+  "uploadButton": "Upload",
+  "uploadRetry": "Retry upload",
+  "uploadDone": "Document uploaded",
+  "uploadPhotoError": "Couldn't read that photo. Try another one.",
+  "pendingTitle": "Verification",
+  "pendingHeadline": "Your profile is under review",
+  "pendingBody": "We'll let you know as soon as you're approved. This usually takes 1–2 working days. Pull down to check again.",
+  "pendingNeedsAttention": "Needs your attention",
+  "pendingNotUploaded": "Not uploaded yet",
+  "pendingFixDocuments": "Fix documents",
+  "pendingAllDocuments": "Your documents",
+  "pendingRefreshFailed": "Couldn't check your status. Pull down to try again.",
+  "suspendedTitle": "Account paused",
+  "suspendedHeadline": "Account paused, contact support",
+  "suspendedBody": "You can't take rides right now. Please contact our support team to resolve this.",
+  "checkAgain": "Check again",
+  "menuProfile": "Profile, vehicle & documents",
+  "menuHelp": "Help & support",
+  "menuPrivacy": "Privacy policy",
+  "menuLogout": "Log out",
+  "logoutConfirmTitle": "Log out?",
+  "logoutConfirmBody": "You'll need a new code to log in again.",
+  "profileTitle": "Profile",
+  "profilePhone": "Mobile number",
+  "profileRating": "Rating",
+  "profileStatus": "Verification",
+  "statusPending": "Pending review",
+  "statusApproved": "Approved",
+  "statusRejected": "Rejected",
+  "statusSuspended": "Suspended",
+  "profileNoVehicle": "No vehicle added yet",
+  "profileDocuments": "Documents",
+  "helpTitle": "Help & support",
+  "helpIntro": "Questions about onboarding, documents or payouts? Contact driver support:",
+  "helpPhoneLabel": "Phone",
+  "helpPhone": "+91 00000 00000",
+  "helpEmailLabel": "Email",
+  "helpEmail": "drivers@example.com",
+  "helpHours": "Support hours: 8 am – 10 pm IST, every day.",
+  "privacyTitle": "Privacy policy",
+  "privacyBody": "This is a placeholder privacy policy. The final policy will explain what we collect from drivers (mobile number, name, date of birth, licence and vehicle details, document photos, the last 4 digits of your ID, trip locations and earnings), why we collect it (to verify drivers, arrange rides, keep riders and drivers safe, settle payments and meet legal requirements), how long we keep it, and how to ask for a copy or deletion of your data.\n\nDocument photos are stored privately and are only visible to our verification team.",
+  "homeEarningsSummary": "{amount} · {trips}",
+  "@homeEarningsSummary": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "trips": {
+        "type": "String"
+      }
+    }
+  },
+  "homeEarningsUnavailable": "—"
+}

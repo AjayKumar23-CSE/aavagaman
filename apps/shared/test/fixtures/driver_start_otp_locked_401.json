@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "OTP_LOCKED",
+    "message": "Too many wrong OTP attempts. Ask the rider to cancel, or cancel the ride."
+  }
+}

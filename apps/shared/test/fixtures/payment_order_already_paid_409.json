@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "RIDE_NOT_PAYABLE",
+    "message": "This ride is already paid"
+  }
+}

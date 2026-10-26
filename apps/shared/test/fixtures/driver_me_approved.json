@@ -1,0 +1,78 @@
+{
+  "user_id": "f5f576ea-3b57-4b59-8339-294a7529e3b3",
+  "name": "Phase Two Driver",
+  "phone": "+919811000777",
+  "verification_status": "approved",
+  "reviewer_note": null,
+  "licence_no": "DL0420110099001",
+  "licence_expiry": "2031-01-01",
+  "date_of_birth": "1990-06-15",
+  "approved_at": "2026-10-04T05:54:55.002Z",
+  "registered": true,
+  "rating_avg": 5,
+  "vehicle": {
+    "id": "45d1adcb-ca9c-44d8-a03a-e8f44e125519",
+    "reg_number": "DL01CP2002",
+    "make": "Maruti Suzuki",
+    "model": "Dzire",
+    "colour": "White",
+    "vehicle_type": "sedan",
+    "fuel_type": "cng",
+    "insurance_expiry": "2031-01-01",
+    "permit_expiry": "2031-01-01",
+    "fitness_expiry": null
+  },
+  "documents": [
+    {
+      "id": "7d65aca9-7cc9-445f-ad6f-13063fa08d24",
+      "doc_type": "selfie",
+      "status": "approved",
+      "reviewer_note": null,
+      "expiry": null,
+      "uploaded_at": "2026-10-04T05:54:06.872Z"
+    },
+    {
+      "id": "90c4a03d-1322-4442-a06d-85b625df1774",
+      "doc_type": "id_proof",
+      "status": "approved",
+      "reviewer_note": null,
+      "expiry": null,
+      "uploaded_at": "2026-10-04T05:54:06.863Z"
+    },
+    {
+      "id": "fcdb67f8-f9e4-48f3-a6ad-33f20803e6ae",
+      "doc_type": "permit",
+      "status": "approved",
+      "reviewer_note": null,
+      "expiry": "2031-01-01",
+      "uploaded_at": "2026-10-04T05:54:06.856Z"
+    },
+    {
+      "id": "33f289ba-beaa-4978-8eb7-9c20ba03d0e2",
+      "doc_type": "insurance",
+      "status": "approved",
+      "reviewer_note": null,
+      "expiry": "2031-01-01",
+      "uploaded_at": "2026-10-04T05:54:06.845Z"
+    },
+    {
+      "id": "231dadbe-b7d4-44fb-ae1b-9fd0156ab535",
+      "doc_type": "rc",
+      "status": "approved",
+      "reviewer_note": null,
+      "expiry": null,
+      "uploaded_at": "2026-10-04T05:54:06.836Z"
+    },
+    {
+      "id": "e458427f-a9f7-4b59-9eed-02b7d45c53d8",
+      "doc_type": "driving_licence",
+      "status": "approved",
+      "reviewer_note": null,
+      "expiry": "2031-01-01",
+      "uploaded_at": "2026-10-04T05:54:06.822Z"
+    }
+  ],
+  "missing_documents": [],
+  "expired_documents": [],
+  "can_go_online": true
+}

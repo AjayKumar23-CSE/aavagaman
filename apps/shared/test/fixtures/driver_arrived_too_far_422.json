@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "TOO_FAR_FROM_PICKUP",
+    "message": "You are 945 m from the pickup; get within 300 m"
+  }
+}

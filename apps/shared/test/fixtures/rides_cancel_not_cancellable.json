@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "RIDE_NOT_CANCELLABLE",
+    "message": "This ride can no longer be cancelled here"
+  }
+}

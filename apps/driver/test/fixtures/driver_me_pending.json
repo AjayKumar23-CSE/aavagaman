@@ -1,0 +1,44 @@
+{
+  "user_id": "89aa02a6-f5d7-44e0-85c4-d62fa130d209",
+  "name": "Ravi Kumar",
+  "phone": "+919800000001",
+  "verification_status": "pending",
+  "reviewer_note": null,
+  "licence_no": "DL0420110012345",
+  "licence_expiry": "2031-05-31",
+  "date_of_birth": "1990-06-15",
+  "approved_at": null,
+  "registered": true,
+  "rating_avg": 5,
+  "vehicle": {
+    "id": "b4867cc9-3291-4b3e-8d51-6b85861fb50b",
+    "reg_number": "DL01AB6183",
+    "make": "Maruti Suzuki",
+    "model": "Dzire",
+    "colour": "White",
+    "vehicle_type": "sedan",
+    "fuel_type": "cng",
+    "insurance_expiry": null,
+    "permit_expiry": null,
+    "fitness_expiry": null
+  },
+  "documents": [
+    {
+      "id": "be2bc43f-ea7e-41c0-a61b-e075c93c351b",
+      "doc_type": "rc",
+      "status": "pending",
+      "reviewer_note": null,
+      "expiry": null,
+      "uploaded_at": "2026-09-27T19:11:05.908Z"
+    }
+  ],
+  "missing_documents": [
+    "driving_licence",
+    "insurance",
+    "permit",
+    "id_proof",
+    "selfie"
+  ],
+  "expired_documents": [],
+  "can_go_online": false
+}

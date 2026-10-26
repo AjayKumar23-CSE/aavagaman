@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "ACTIVE_RIDE_EXISTS",
+    "message": "You already have an active ride"
+  }
+}

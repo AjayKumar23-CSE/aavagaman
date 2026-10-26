@@ -1,0 +1,51 @@
+name: admin
+
+on:
+  pull_request:
+    paths: ['admin/**', '.github/workflows/admin.yml']
+  push:
+    branches: [main]
+    paths: ['admin/**', '.github/workflows/admin.yml']
+
+defaults:
+  run:
+    working-directory: admin
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: admin/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run build
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL || 'http://localhost:3000' }}
+      - run: npm audit --omit=dev --audit-level=high
+      - uses: actions/upload-artifact@v4
+        with:
+          name: admin-dist
+          path: admin/dist
+
+  # Needs secrets CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID and repo variable
+  # CF_PAGES_PROJECT (SPEC §17.4).
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.CF_PAGES_PROJECT != ''
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: admin-dist
+          path: dist
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=${{ vars.CF_PAGES_PROJECT }}

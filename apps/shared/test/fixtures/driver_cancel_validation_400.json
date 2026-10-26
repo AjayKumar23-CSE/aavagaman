@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": "VALIDATION_FAILED",
+    "message": "Validation failed",
+    "details": [
+      "reason must be longer than or equal to 1 characters",
+      "reason must be a string"
+    ]
+  }
+}

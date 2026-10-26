@@ -1,0 +1,22 @@
+{
+  "distance_m": 308500,
+  "duration_s": 44071,
+  "fare_min": 4611,
+  "fare_max": 5339,
+  "currency": "INR",
+  "in_service_area": {
+    "pickup": true,
+    "drop": false
+  },
+  "fare_config_id": "18a7467e-bdfa-4c97-91ec-3a99db2d98d9",
+  "vehicle_type": "sedan",
+  "options": [
+    {
+      "vehicle_type": "sedan",
+      "seats": 4,
+      "fare_min": 4611,
+      "fare_max": 5339,
+      "fare_config_id": "18a7467e-bdfa-4c97-91ec-3a99db2d98d9"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "ride_id": "593b722c-a7ba-496a-afb6-f728ea32e48a",
+  "status": "CANCELLED",
+  "driver": {
+    "id": "f5f576ea-3b57-4b59-8339-294a7529e3b3",
+    "name": "Phase Two Driver",
+    "rating": 5,
+    "phone_masked": "******0777",
+    "vehicle": {
+      "reg_number": "DL01CP2002",
+      "make": "Maruti Suzuki",
+      "model": "Dzire",
+      "colour": "White"
+    }
+  },
+  "cancellation_fee": 30,
+  "cancelled_by": "rider",
+  "cancel_reason": "Changed plans"
+}

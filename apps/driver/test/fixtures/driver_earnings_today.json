@@ -1,0 +1,12 @@
+{
+  "period": "today",
+  "from": "2026-10-03T18:30:00.000Z",
+  "to": "2026-10-04T06:40:44.745Z",
+  "rides": 1,
+  "gross": 88,
+  "commission": 12.57,
+  "gst": 4.19,
+  "net": 71.24,
+  "cash_collected": 118,
+  "online": 0
+}

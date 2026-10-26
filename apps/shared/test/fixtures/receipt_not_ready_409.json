@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "RECEIPT_NOT_READY",
+    "message": "The receipt is available once the trip is completed"
+  }
+}

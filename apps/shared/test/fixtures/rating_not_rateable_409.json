@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "RIDE_NOT_RATEABLE",
+    "message": "You can rate once the trip is completed"
+  }
+}

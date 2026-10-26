@@ -1,0 +1,7 @@
+{
+  "ok": false,
+  "error": {
+    "code": "VALIDATION_FAILED",
+    "message": "lat must be a latitude string or number; lng must be a longitude string or number"
+  }
+}

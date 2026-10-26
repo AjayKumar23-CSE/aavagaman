@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "FARE_CONFIG_INVALID",
+    "message": "Fare has changed. Please get a new estimate."
+  }
+}

@@ -1,0 +1,114 @@
+name: backend
+
+on:
+  pull_request:
+    paths: ['backend/**', 'infra/seed/**', '.github/workflows/backend.yml']
+  push:
+    branches: [main]
+    paths: ['backend/**', 'infra/seed/**', '.github/workflows/backend.yml']
+
+defaults:
+  run:
+    working-directory: backend
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_USER: ride
+          POSTGRES_PASSWORD: ride
+          POSTGRES_DB: ride
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U ride" --health-interval 5s --health-retries 20
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+        options: >-
+          --health-cmd "redis-cli ping" --health-interval 5s --health-retries 20
+    env:
+      NODE_ENV: test
+      API_BASE_URL: http://localhost:3000
+      ADMIN_ORIGIN: http://localhost:5173
+      DATABASE_URL: postgresql://ride:ride@localhost:5432/ride
+      SHADOW_DATABASE_URL: postgresql://ride:ride@localhost:5432/ride_shadow
+      REDIS_URL: redis://localhost:6379
+      # OSRM_BASE_URL, OTP/matching timers etc. come from backend/.env.test (fake OSRM on :5055).
+      JWT_ACCESS_SECRET: ci-access
+      JWT_REFRESH_SECRET: ci-refresh
+      OTP_PEPPER: ci-pepper
+      OTP_DEV_BYPASS_CODE: '123456'
+      # Presigning is offline; these only need to be well-formed.
+      S3_ENDPOINT: http://localhost:9000
+      S3_BUCKET: ride-docs-ci
+      S3_ACCESS_KEY_ID: ci
+      S3_SECRET_ACCESS_KEY: ci-secret
+      PRISMA_HIDE_UPDATE_MESSAGE: '1'
+      LOG_LEVEL: warn
+      SEED_ADMIN_EMAIL: admin@ci.local
+      SEED_ADMIN_PASSWORD: ci-password
+      SEED_ADMIN_PHONE: '+910000000000'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm audit --omit=dev --audit-level=high
+      - name: Migrate and seed
+        run: npx prisma migrate deploy && npm run seed
+      - name: Seed is idempotent
+        run: npm run seed
+      - run: npm run test:e2e
+      - name: Migration drift check
+        run: |
+          PGPASSWORD=ride psql -h localhost -U ride -d ride -c 'CREATE DATABASE ride_shadow'
+          PGPASSWORD=ride psql -h localhost -U ride -d ride_shadow -c 'CREATE EXTENSION postgis; CREATE EXTENSION "uuid-ossp";'
+          scripts/check-migrations.sh
+
+  image:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: backend
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}/api:latest
+            ghcr.io/${{ github.repository }}/api:${{ github.sha }}
+
+  # Enabled once the server exists (Phase 5): set repo variable DEPLOY_ENABLED=true
+  # and secrets DEPLOY_HOST, DEPLOY_USER, DEPLOY_SSH_KEY.
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.DEPLOY_ENABLED == 'true'
+    needs: image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            cd /opt/ride-platform
+            docker compose pull && docker compose up -d api worker && docker compose exec -T api npx prisma migrate deploy

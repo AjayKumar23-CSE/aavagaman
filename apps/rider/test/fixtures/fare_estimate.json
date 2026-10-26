@@ -1,0 +1,43 @@
+{
+  "distance_m": 3141,
+  "duration_s": 449,
+  "fare_min": 94,
+  "fare_max": 109,
+  "currency": "INR",
+  "in_service_area": {
+    "pickup": true,
+    "drop": true
+  },
+  "fare_config_id": "18a7467e-bdfa-4c97-91ec-3a99db2d98d9",
+  "vehicle_type": "sedan",
+  "options": [
+    {
+      "vehicle_type": "bike",
+      "seats": 1,
+      "fare_min": 44,
+      "fare_max": 51,
+      "fare_config_id": "fc-bike"
+    },
+    {
+      "vehicle_type": "auto",
+      "seats": 3,
+      "fare_min": 63,
+      "fare_max": 72,
+      "fare_config_id": "fc-auto"
+    },
+    {
+      "vehicle_type": "mini",
+      "seats": 4,
+      "fare_min": 77,
+      "fare_max": 89,
+      "fare_config_id": "fc-mini"
+    },
+    {
+      "vehicle_type": "sedan",
+      "seats": 4,
+      "fare_min": 94,
+      "fare_max": 109,
+      "fare_config_id": "18a7467e-bdfa-4c97-91ec-3a99db2d98d9"
+    }
+  ]
+}

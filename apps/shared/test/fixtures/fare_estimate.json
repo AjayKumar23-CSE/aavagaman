@@ -1,0 +1,12 @@
+{
+  "distance_m": 3141,
+  "duration_s": 449,
+  "fare_min": 94,
+  "fare_max": 109,
+  "currency": "INR",
+  "in_service_area": {
+    "pickup": true,
+    "drop": true
+  },
+  "fare_config_id": "18a7467e-bdfa-4c97-91ec-3a99db2d98d9"
+}

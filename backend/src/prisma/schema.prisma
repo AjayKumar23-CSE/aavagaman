@@ -1,0 +1,476 @@
+// Mirrors SPEC.md Section 5 (+ refresh_tokens from Section 16).
+// PostGIS columns are Unsupported(...) and must be read/written with raw SQL.
+// Partial and GIST indexes live only in the SQL migrations — see docs/DECISIONS.md (D-004).
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis, uuid_ossp(map: "uuid-ossp")]
+}
+
+enum UserRole {
+  rider
+  driver
+  admin
+
+  @@map("user_role")
+}
+
+enum UserStatus {
+  active
+  blocked
+
+  @@map("user_status")
+}
+
+enum VerificationStatus {
+  pending
+  approved
+  rejected
+  suspended
+
+  @@map("verification_status")
+}
+
+enum RideStatus {
+  REQUESTED
+  ACCEPTED
+  ARRIVED
+  STARTED
+  COMPLETED
+  PAID
+  CANCELLED
+  NO_DRIVER
+
+  @@map("ride_status")
+}
+
+enum CancelActor {
+  rider
+  driver
+  admin
+  system
+
+  @@map("cancel_actor")
+}
+
+enum OfferResponse {
+  accepted
+  rejected
+  timeout
+  withdrawn
+
+  @@map("offer_response")
+}
+
+enum PaymentMethod {
+  cash
+  upi
+  card
+  wallet
+
+  @@map("payment_method")
+}
+
+/// Rider's choice at booking (SPEC §7.2 POST /rides); D-021.
+enum RidePayment {
+  cash
+  online
+
+  @@map("ride_payment")
+}
+
+enum PaymentStatus {
+  pending
+  paid
+  failed
+  refunded
+
+  @@map("payment_status")
+}
+
+enum DocType {
+  driving_licence
+  rc
+  insurance
+  permit
+  id_proof
+  selfie
+  fitness
+
+  @@map("doc_type")
+}
+
+/// Masked call between rider and driver (D-058).
+enum CallStatus {
+  initiated
+  ringing
+  in_progress
+  completed
+  no_answer
+  busy
+  failed
+
+  @@map("call_status")
+}
+
+model User {
+  id           String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  phone        String     @unique @db.VarChar(15)
+  name         String?    @db.VarChar(80)
+  email        String?    @db.VarChar(120)
+  role         UserRole
+  status       UserStatus @default(active)
+  passwordHash String?    @map("password_hash")
+  fcmToken     String?    @map("fcm_token")
+  ratingAvg    Decimal?   @default(5.00) @map("rating_avg") @db.Decimal(3, 2)
+  ratingCount  Int?       @default(0) @map("rating_count")
+  createdAt    DateTime?  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime?  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  driver             Driver?            @relation("DriverUser")
+  approvedDrivers    Driver[]           @relation("DriverApprovedBy")
+  fareConfigs        FareConfig[]
+  ridesAsRider       Ride[]
+  ratingsGiven       Rating[]           @relation("RatingFrom")
+  ratingsReceived    Rating[]           @relation("RatingTo")
+  settlementsSettled DriverSettlement[]
+  sosAlerts          SosAlert[]         @relation("SosUser")
+  sosAcknowledged    SosAlert[]         @relation("SosAck")
+  callsMade          RideCall[]         @relation("CallCaller")
+  callsReceived      RideCall[]         @relation("CallCallee")
+  refreshTokens      RefreshToken[]
+
+  @@map("users")
+}
+
+model Driver {
+  userId             String             @id @map("user_id") @db.Uuid
+  licenceNo          String?            @map("licence_no") @db.VarChar(40)
+  licenceExpiry      DateTime?          @map("licence_expiry") @db.Date
+  dateOfBirth        DateTime?          @map("date_of_birth") @db.Date
+  idLast4            String?            @map("id_last4") @db.VarChar(4)
+  selfieKey          String?            @map("selfie_key")
+  verificationStatus VerificationStatus @default(pending) @map("verification_status")
+  reviewerNote       String?            @map("reviewer_note")
+  approvedById       String?            @map("approved_by") @db.Uuid
+  approvedAt         DateTime?          @map("approved_at") @db.Timestamptz(6)
+  cancelCountToday   Int?               @default(0) @map("cancel_count_today")
+  cancelCountResetAt DateTime?          @map("cancel_count_reset_at") @db.Date
+  createdAt          DateTime?          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime?          @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user        User               @relation("DriverUser", fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  approvedBy  User?              @relation("DriverApprovedBy", fields: [approvedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  vehicles    Vehicle[]
+  documents   DriverDocument[]
+  rides       Ride[]
+  offers      RideOffer[]
+  settlements DriverSettlement[]
+
+  @@map("drivers")
+}
+
+model Vehicle {
+  id              String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  driverId        String    @map("driver_id") @db.Uuid
+  regNumber       String    @map("reg_number") @db.VarChar(15)
+  make            String?   @db.VarChar(40)
+  model           String?   @db.VarChar(40)
+  colour          String?   @db.VarChar(30)
+  vehicleType     String    @default("sedan") @map("vehicle_type") @db.VarChar(20)
+  fuelType        String?   @map("fuel_type") @db.VarChar(20)
+  insuranceExpiry DateTime? @map("insurance_expiry") @db.Date
+  permitExpiry    DateTime? @map("permit_expiry") @db.Date
+  fitnessExpiry   DateTime? @map("fitness_expiry") @db.Date
+  active          Boolean?  @default(true)
+  createdAt       DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime? @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  driver Driver @relation(fields: [driverId], references: [userId], onDelete: NoAction, onUpdate: NoAction)
+  rides  Ride[]
+
+  @@map("vehicles")
+}
+
+model DriverDocument {
+  id           String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  driverId     String             @map("driver_id") @db.Uuid
+  docType      DocType            @map("doc_type")
+  fileKey      String             @map("file_key")
+  status       VerificationStatus @default(pending)
+  reviewerNote String?            @map("reviewer_note")
+  expiry       DateTime?          @db.Date
+  uploadedAt   DateTime?          @default(now()) @map("uploaded_at") @db.Timestamptz(6)
+
+  driver Driver @relation(fields: [driverId], references: [userId], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("driver_documents")
+}
+
+model FareConfig {
+  id              String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  vehicleType     String   @default("sedan") @map("vehicle_type") @db.VarChar(20)
+  baseFare        Decimal  @map("base_fare") @db.Decimal(8, 2)
+  perKm           Decimal  @map("per_km") @db.Decimal(8, 2)
+  perMin          Decimal  @map("per_min") @db.Decimal(8, 2)
+  minFare         Decimal  @map("min_fare") @db.Decimal(8, 2)
+  cancellationFee Decimal  @default(30) @map("cancellation_fee") @db.Decimal(8, 2)
+  nightMultiplier Decimal  @default(1.00) @map("night_multiplier") @db.Decimal(4, 2)
+  nightEnabled    Boolean  @default(false) @map("night_enabled")
+  commissionPct   Decimal  @default(15.00) @map("commission_pct") @db.Decimal(5, 2)
+  gstPct          Decimal  @default(5.00) @map("gst_pct") @db.Decimal(5, 2)
+  effectiveFrom   DateTime @default(now()) @map("effective_from") @db.Timestamptz(6)
+  createdById     String?  @map("created_by") @db.Uuid
+
+  createdBy User?  @relation(fields: [createdById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  rides     Ride[]
+
+  @@map("fare_config")
+}
+
+model ServiceArea {
+  id        String                                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name      String                                 @db.VarChar(60)
+  polygon   Unsupported("geography(Polygon,4326)")
+  active    Boolean?                               @default(true)
+  createdAt DateTime?                              @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("service_areas")
+}
+
+model Ride {
+  id                 String                               @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  riderId            String                               @map("rider_id") @db.Uuid
+  driverId           String?                              @map("driver_id") @db.Uuid
+  vehicleId          String?                              @map("vehicle_id") @db.Uuid
+  status             RideStatus                           @default(REQUESTED)
+  vehicleType        String                               @default("sedan") @map("vehicle_type") @db.VarChar(20)
+  paymentMethod      RidePayment                          @default(cash) @map("payment_method")
+  pickupPoint        Unsupported("geography(Point,4326)") @map("pickup_point")
+  pickupAddress      String                               @map("pickup_address")
+  dropPoint          Unsupported("geography(Point,4326)") @map("drop_point")
+  dropAddress        String                               @map("drop_address")
+  estDistanceM       Int?                                 @map("est_distance_m")
+  estDurationS       Int?                                 @map("est_duration_s")
+  estFareMin         Decimal?                             @map("est_fare_min") @db.Decimal(8, 2)
+  estFareMax         Decimal?                             @map("est_fare_max") @db.Decimal(8, 2)
+  actualDistanceM    Int?                                 @map("actual_distance_m")
+  actualDurationS    Int?                                 @map("actual_duration_s")
+  finalFare          Decimal?                             @map("final_fare") @db.Decimal(8, 2)
+  fareConfigId       String?                              @map("fare_config_id") @db.Uuid
+  cancellationFee    Decimal?                             @default(0) @map("cancellation_fee") @db.Decimal(8, 2)
+  cancelledBy        CancelActor?                         @map("cancelled_by")
+  cancelReason       String?                              @map("cancel_reason")
+  /// CANCELLED rides only: the later COMPLETED ride whose receipt collected this fee (SPEC §9.5).
+  feeAppliedToRideId String?                              @map("fee_applied_to_ride_id") @db.Uuid
+  tripOtp            String                               @map("trip_otp") @db.Char(4)
+  otpAttempts        Int                                  @default(0) @map("otp_attempts") @db.SmallInt
+  shareToken         String?                              @unique @map("share_token") @db.VarChar(32)
+  requestedAt        DateTime?                            @default(now()) @map("requested_at") @db.Timestamptz(6)
+  acceptedAt         DateTime?                            @map("accepted_at") @db.Timestamptz(6)
+  arrivedAt          DateTime?                            @map("arrived_at") @db.Timestamptz(6)
+  startedAt          DateTime?                            @map("started_at") @db.Timestamptz(6)
+  completedAt        DateTime?                            @map("completed_at") @db.Timestamptz(6)
+  paidAt             DateTime?                            @map("paid_at") @db.Timestamptz(6)
+  cancelledAt        DateTime?                            @map("cancelled_at") @db.Timestamptz(6)
+  createdAt          DateTime?                            @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime?                            @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  rider            User        @relation(fields: [riderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  driver           Driver?     @relation(fields: [driverId], references: [userId], onDelete: NoAction, onUpdate: NoAction)
+  vehicle          Vehicle?    @relation(fields: [vehicleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  fareConfig       FareConfig? @relation(fields: [fareConfigId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  offers           RideOffer[]
+  events           RideEvent[]
+  tracks           RideTrack[]
+  payment          Payment?
+  ratings          Rating[]
+  sosAlerts        SosAlert[]
+  calls            RideCall[]
+  feeAppliedToRide Ride?       @relation("FeeAppliedTo", fields: [feeAppliedToRideId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  feesCollected    Ride[]      @relation("FeeAppliedTo")
+
+  @@index([status, requestedAt(sort: Desc)], map: "rides_status_time")
+  @@index([riderId, requestedAt(sort: Desc)], map: "rides_rider")
+  @@index([driverId, requestedAt(sort: Desc)], map: "rides_driver")
+  @@map("rides")
+}
+
+model RideOffer {
+  id                String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  rideId            String         @map("ride_id") @db.Uuid
+  driverId          String         @map("driver_id") @db.Uuid
+  distanceToPickupM Int?           @map("distance_to_pickup_m")
+  offeredAt         DateTime?      @default(now()) @map("offered_at") @db.Timestamptz(6)
+  respondedAt       DateTime?      @map("responded_at") @db.Timestamptz(6)
+  response          OfferResponse?
+
+  ride   Ride   @relation(fields: [rideId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  driver Driver @relation(fields: [driverId], references: [userId], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([rideId], map: "ride_offers_ride")
+  @@map("ride_offers")
+}
+
+model RideEvent {
+  id         BigInt      @id @default(autoincrement())
+  rideId     String      @map("ride_id") @db.Uuid
+  fromStatus RideStatus? @map("from_status")
+  toStatus   RideStatus  @map("to_status")
+  actor      CancelActor
+  actorId    String?     @map("actor_id") @db.Uuid
+  meta       Json?
+  createdAt  DateTime?   @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  ride Ride @relation(fields: [rideId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([rideId, createdAt], map: "ride_events_ride")
+  @@map("ride_events")
+}
+
+model RideTrack {
+  rideId     String                               @map("ride_id") @db.Uuid
+  recordedAt DateTime                             @map("recorded_at") @db.Timestamptz(6)
+  point      Unsupported("geography(Point,4326)")
+  speedMps   Float?                               @map("speed_mps") @db.Real
+  accuracyM  Float?                               @map("accuracy_m") @db.Real
+
+  ride Ride @relation(fields: [rideId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([rideId, recordedAt])
+  @@map("ride_tracks")
+}
+
+model Payment {
+  id               String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  rideId           String        @unique @map("ride_id") @db.Uuid
+  method           PaymentMethod
+  amount           Decimal       @db.Decimal(8, 2)
+  status           PaymentStatus @default(pending)
+  gatewayOrderId   String?       @map("gateway_order_id")
+  gatewayPaymentId String?       @map("gateway_payment_id")
+  gatewaySignature String?       @map("gateway_signature")
+  paidAt           DateTime?     @map("paid_at") @db.Timestamptz(6)
+  createdAt        DateTime?     @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime?     @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  ride Ride @relation(fields: [rideId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("payments")
+}
+
+model Rating {
+  id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  rideId     String    @map("ride_id") @db.Uuid
+  fromUserId String    @map("from_user_id") @db.Uuid
+  toUserId   String    @map("to_user_id") @db.Uuid
+  stars      Int       @db.SmallInt
+  comment    String?
+  createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  ride     Ride @relation(fields: [rideId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  fromUser User @relation("RatingFrom", fields: [fromUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  toUser   User @relation("RatingTo", fields: [toUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([rideId, fromUserId])
+  @@map("ratings")
+}
+
+model DriverSettlement {
+  id              String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  driverId        String    @map("driver_id") @db.Uuid
+  periodStart     DateTime  @map("period_start") @db.Date
+  periodEnd       DateTime  @map("period_end") @db.Date
+  ridesCount      Int?      @map("rides_count")
+  grossFares      Decimal?  @map("gross_fares") @db.Decimal(10, 2)
+  commission      Decimal?  @db.Decimal(10, 2)
+  cashCollected   Decimal?  @map("cash_collected") @db.Decimal(10, 2)
+  onlineCollected Decimal?  @map("online_collected") @db.Decimal(10, 2)
+  /// positive: platform pays driver; negative: driver pays platform
+  amountPayable   Decimal?  @map("amount_payable") @db.Decimal(10, 2)
+  settledAt       DateTime? @map("settled_at") @db.Timestamptz(6)
+  reference       String?
+  settledById     String?   @map("settled_by") @db.Uuid
+  createdAt       DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  driver    Driver @relation(fields: [driverId], references: [userId], onDelete: NoAction, onUpdate: NoAction)
+  settledBy User?  @relation(fields: [settledById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([driverId, periodStart])
+  @@map("driver_settlements")
+}
+
+/// One bridged (number-masked) call placed from the app (D-058).
+model RideCall {
+  id             String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  rideId         String     @map("ride_id") @db.Uuid
+  callerId       String     @map("caller_id") @db.Uuid
+  calleeId       String     @map("callee_id") @db.Uuid
+  provider       String     @db.VarChar(20)
+  providerCallId String?    @map("provider_call_id") @db.VarChar(100)
+  status         CallStatus @default(initiated)
+  durationS      Int?       @map("duration_s")
+  /// Why the provider refused or dropped the call, for support (D-058).
+  failureReason  String?    @map("failure_reason") @db.VarChar(300)
+  createdAt      DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  endedAt        DateTime?  @map("ended_at") @db.Timestamptz(6)
+
+  ride   Ride @relation(fields: [rideId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  caller User @relation("CallCaller", fields: [callerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  callee User @relation("CallCallee", fields: [calleeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([rideId, createdAt])
+  @@index([providerCallId])
+  @@map("ride_calls")
+}
+
+model SosAlert {
+  id               String                                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  rideId           String?                               @map("ride_id") @db.Uuid
+  userId           String                                @map("user_id") @db.Uuid
+  point            Unsupported("geography(Point,4326)")?
+  acknowledgedById String?                               @map("acknowledged_by") @db.Uuid
+  acknowledgedAt   DateTime?                             @map("acknowledged_at") @db.Timestamptz(6)
+  createdAt        DateTime?                             @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  ride           Ride? @relation(fields: [rideId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user           User  @relation("SosUser", fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  acknowledgedBy User? @relation("SosAck", fields: [acknowledgedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("sos_alerts")
+}
+
+model AuditLog {
+  id        BigInt    @id @default(autoincrement())
+  actorId   String?   @map("actor_id") @db.Uuid
+  action    String    @db.VarChar(60)
+  entity    String?   @db.VarChar(40)
+  entityId  String?   @map("entity_id") @db.Uuid
+  before    Json?
+  after     Json?
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("audit_log")
+}
+
+/// SPEC §16: refresh tokens are stored hashed; rotation + reuse detection.
+model RefreshToken {
+  id        String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  tokenHash String    @unique @map("token_hash")
+  expiresAt DateTime  @map("expires_at") @db.Timestamptz(6)
+  revokedAt DateTime? @map("revoked_at") @db.Timestamptz(6)
+  device    Json?
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}

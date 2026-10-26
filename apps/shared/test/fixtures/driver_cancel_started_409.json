@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "INVALID_TRANSITION",
+    "message": "Cannot driver cancel requeue a STARTED ride as driver"
+  }
+}

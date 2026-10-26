@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "NO_ACTIVE_RIDE",
+    "message": "No active ride"
+  }
+}

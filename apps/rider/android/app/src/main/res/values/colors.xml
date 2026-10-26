@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Aavagaman brand (D-057) -->
+    <color name="launch_background">#0F3D2E</color>
+    <color name="ic_launcher_background">#080F14</color>
+</resources>

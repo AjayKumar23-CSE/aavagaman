@@ -1,0 +1,17 @@
+{
+  "ride_id": "b3f00e23-129a-469a-96b3-92466eaaee2e",
+  "status": "STARTED",
+  "driver": {
+    "id": "f5f576ea-3b57-4b59-8339-294a7529e3b3",
+    "name": "Phase Two Driver",
+    "rating": 5,
+    "phone_masked": "******0777",
+    "phone": "+919811000777",
+    "vehicle": {
+      "reg_number": "DL01CP2002",
+      "make": "Maruti Suzuki",
+      "model": "Dzire",
+      "colour": "White"
+    }
+  }
+}

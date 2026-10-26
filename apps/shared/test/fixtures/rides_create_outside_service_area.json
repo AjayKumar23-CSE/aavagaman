@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "OUTSIDE_SERVICE_AREA",
+    "message": "Pickup is outside our service area"
+  }
+}

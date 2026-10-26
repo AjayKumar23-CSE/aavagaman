@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "VALIDATION_FAILED",
+    "message": "Validation failed",
+    "details": [
+      "period must be one of the following values: today, week"
+    ]
+  }
+}

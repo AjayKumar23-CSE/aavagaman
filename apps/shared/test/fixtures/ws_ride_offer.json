@@ -1,0 +1,13 @@
+{
+  "ride_id": "50e8fbe1-f0ee-4ec4-b7e8-b975a61db20b",
+  "pickup": {
+    "lat": 28.6315,
+    "lng": 77.2167,
+    "address": "Connaught Place, New Delhi"
+  },
+  "drop_address": "India Gate, New Delhi",
+  "distance_to_pickup_m": 148,
+  "est_fare_min": 94,
+  "est_fare_max": 109,
+  "expires_at": "2026-10-04T05:55:15.085Z"
+}

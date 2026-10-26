@@ -1,0 +1,41 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "mjs",
+    "json",
+    "ts"
+  ],
+  "rootDir": "..",
+  "testRegex": "e2e/.*\\.e2e-spec\\.ts$",
+  "transform": {
+    "^.+\\.(t|j|mj)s$": [
+      "@swc/jest",
+      {
+        "jsc": {
+          "parser": {
+            "syntax": "typescript",
+            "decorators": true
+          },
+          "transform": {
+            "legacyDecorator": true,
+            "decoratorMetadata": true
+          },
+          "target": "es2022"
+        },
+        "module": {
+          "type": "commonjs"
+        }
+      }
+    ]
+  },
+  "transformIgnorePatterns": [
+    "node_modules/(?!(@nestjs|file-type|strtok3|token-types|peek-readable|@tokenizer|uint8array-extras|load-esm)/)"
+  ],
+  "testEnvironment": "node",
+  "testTimeout": 30000,
+  "setupFiles": [
+    "<rootDir>/test/e2e/setup-env.ts"
+  ],
+  "globalSetup": "<rootDir>/test/e2e/global-setup.ts",
+  "globalTeardown": "<rootDir>/test/e2e/global-teardown.ts"
+}

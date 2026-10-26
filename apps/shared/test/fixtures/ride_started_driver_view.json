@@ -1,0 +1,55 @@
+{
+  "id": "b3f00e23-129a-469a-96b3-92466eaaee2e",
+  "status": "STARTED",
+  "vehicle_type": "sedan",
+  "payment_method": "cash",
+  "pickup": {
+    "lat": 28.6315,
+    "lng": 77.2167,
+    "address": "Connaught Place, New Delhi"
+  },
+  "drop": {
+    "lat": 28.6129,
+    "lng": 77.2295,
+    "address": "India Gate, New Delhi"
+  },
+  "est_distance_m": 3141,
+  "est_duration_s": 449,
+  "est_fare_min": 94,
+  "est_fare_max": 109,
+  "actual_distance_m": null,
+  "actual_duration_s": null,
+  "final_fare": null,
+  "cancellation_fee": 0,
+  "amount_due": null,
+  "cancelled_by": null,
+  "cancel_reason": null,
+  "fare_config_id": "18a7467e-bdfa-4c97-91ec-3a99db2d98d9",
+  "requested_at": "2026-10-04T06:38:49.553Z",
+  "accepted_at": "2026-10-04T06:38:49.575Z",
+  "arrived_at": "2026-10-04T06:38:49.597Z",
+  "started_at": "2026-10-04T06:38:49.623Z",
+  "completed_at": null,
+  "paid_at": null,
+  "cancelled_at": null,
+  "driver": {
+    "id": "f5f576ea-3b57-4b59-8339-294a7529e3b3",
+    "name": "Phase Two Driver",
+    "rating": 5,
+    "phone_masked": "******0777",
+    "phone": "+919811000777",
+    "vehicle": {
+      "reg_number": "DL01CP2002",
+      "make": "Maruti Suzuki",
+      "model": "Dzire",
+      "colour": "White"
+    }
+  },
+  "rider": {
+    "id": "d50615d2-c1b1-4121-af34-9078d9d39a6c",
+    "name": "Phase Two Rider",
+    "rating": 5,
+    "phone_masked": "******0778",
+    "phone": "+919811000778"
+  }
+}

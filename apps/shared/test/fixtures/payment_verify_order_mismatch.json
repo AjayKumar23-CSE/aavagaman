@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "ORDER_MISMATCH",
+    "message": "This payment does not belong to the ride"
+  }
+}

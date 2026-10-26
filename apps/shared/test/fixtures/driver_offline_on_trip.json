@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "ON_TRIP",
+    "message": "Finish your ride before going offline"
+  }
+}

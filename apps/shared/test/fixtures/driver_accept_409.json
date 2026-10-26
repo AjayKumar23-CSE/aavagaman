@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "OFFER_NOT_VALID",
+    "message": "This ride is no longer available"
+  }
+}

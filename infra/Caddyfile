@@ -1,0 +1,9 @@
+# SPEC §17.2. API_DOMAIN comes from the environment (api.example.com / api-staging.example.com).
+{$API_DOMAIN} {
+  reverse_proxy api:3000
+  encode gzip
+  header {
+    Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    -Server
+  }
+}

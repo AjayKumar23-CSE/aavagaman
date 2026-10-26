@@ -1,0 +1,38 @@
+{
+  "id": "8292e224-f88b-4c03-8166-594620335b53",
+  "status": "CANCELLED",
+  "vehicle_type": "sedan",
+  "payment_method": "online",
+  "pickup": {
+    "lat": 28.6315,
+    "lng": 77.2167,
+    "address": "Connaught Place, New Delhi"
+  },
+  "drop": {
+    "lat": 28.6129,
+    "lng": 77.2295,
+    "address": "India Gate, New Delhi"
+  },
+  "est_distance_m": 3141,
+  "est_duration_s": 449,
+  "est_fare_min": 94,
+  "est_fare_max": 109,
+  "actual_distance_m": null,
+  "actual_duration_s": null,
+  "final_fare": null,
+  "cancellation_fee": 0,
+  "amount_due": null,
+  "cancelled_by": "rider",
+  "cancel_reason": null,
+  "fare_config_id": "18a7467e-bdfa-4c97-91ec-3a99db2d98d9",
+  "requested_at": "2026-10-04T06:40:44.626Z",
+  "accepted_at": null,
+  "arrived_at": null,
+  "started_at": null,
+  "completed_at": null,
+  "paid_at": null,
+  "cancelled_at": "2026-10-04T06:40:44.714Z",
+  "trip_otp": null,
+  "share_token": "1811c073e66fe60dacdc4019288c056e",
+  "driver": null
+}
