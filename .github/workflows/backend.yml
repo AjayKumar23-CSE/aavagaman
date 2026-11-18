@@ -90,13 +90,16 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      # Image names must be lowercase; the repository owner has capitals.
+      - id: image
+        run: echo "name=ghcr.io/${GITHUB_REPOSITORY,,}/api" >> "$GITHUB_OUTPUT"
       - uses: docker/build-push-action@v6
         with:
           context: backend
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/api:latest
-            ghcr.io/${{ github.repository }}/api:${{ github.sha }}
+            ${{ steps.image.outputs.name }}:latest
+            ${{ steps.image.outputs.name }}:${{ github.sha }}
 
   # Enabled once the server exists (Phase 5): set repo variable DEPLOY_ENABLED=true
   # and secrets DEPLOY_HOST, DEPLOY_USER, DEPLOY_SSH_KEY.
