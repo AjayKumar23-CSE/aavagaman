@@ -4,7 +4,8 @@ coverage/
 .env
 .env.*
 !.env.example
-!backend/.env.test   # no secrets; canonical e2e config (timers, fake OSRM port)
+# no secrets; canonical e2e config (timers, fake OSRM port)
+!backend/.env.test
 *.log
 .DS_Store
 # Flutter
