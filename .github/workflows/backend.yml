@@ -48,8 +48,9 @@ jobs:
       S3_SECRET_ACCESS_KEY: ci-secret
       PRISMA_HIDE_UPDATE_MESSAGE: '1'
       LOG_LEVEL: warn
-      SEED_ADMIN_EMAIL: admin@ci.local
-      SEED_ADMIN_PASSWORD: ci-password
+      # Must match the admin the e2e suites log in as (backend/.env.test).
+      SEED_ADMIN_EMAIL: admin@test.local
+      SEED_ADMIN_PASSWORD: admin12345
       SEED_ADMIN_PHONE: '+910000000000'
     steps:
       - uses: actions/checkout@v4
