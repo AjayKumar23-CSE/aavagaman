@@ -31,6 +31,7 @@ flutter:
   assets:
     - assets/car_marker.png
     - assets/splash_india_gate.jpg
+    - assets/blincab_vehicles.png
   fonts:
     - family: PlusJakartaSans
       fonts:

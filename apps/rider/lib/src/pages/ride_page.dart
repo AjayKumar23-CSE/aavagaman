@@ -90,7 +90,7 @@ class _RidePageState extends ConsumerState<RidePage> with WidgetsBindingObserver
   }
 
   /// SOS (SPEC §11): confirm → dial 112 → `POST /rides/:id/sos` → toast.
-  /// Call the driver through the Aavagaman number: the server rings this
+  /// Call the driver through the BlinCab number: the server rings this
   /// phone first, then the driver; neither sees the other's number (D-058).
   Future<void> _callViaApp(Ride ride) async {
     final l10n = AppLocalizations.of(context);
@@ -201,7 +201,7 @@ class _RideActions {
   final VoidCallback onSos;
   final VoidCallback onCancel;
 
-  /// Bridged call through the Aavagaman number (D-058).
+  /// Bridged call through the BlinCab number (D-058).
   final VoidCallback onCall;
 }
 
@@ -272,7 +272,7 @@ class _FindingViewState extends State<_FindingView> {
           children: [
             RingProgress(
               pin: true,
-              gradient: [AppColors.of(context).gradientStart, Brand.freshGreen],
+              gradient: [AppColors.of(context).gradientStart, Brand.yellow],
               value: progress,
               size: 104,
               stroke: 8,

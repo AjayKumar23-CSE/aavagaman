@@ -1,8 +1,10 @@
-# Aavagaman — Delhi NCR ride-hailing
+# BlinCab — Delhi NCR ride-hailing
 
-*Safar • Aapke Saath.* Brand assets (logo, icons, palette) are in `docs/branding/`; the mark is drawn in code in `apps/shared/lib/src/widgets/brand.dart` (D-057).
+*Bike • Cab • Auto.* Brand assets (logo, icons, palette) are in `docs/branding/`; the widgets that use them live in `apps/shared/lib/src/widgets/brand.dart` (D-059).
 
 Rider app, driver app, admin panel and backend. **SPEC.md is the contract**; decisions that deviate from it are in [docs/DECISIONS.md](docs/DECISIONS.md).
+
+**New here? Follow [docs/SETUP.md](docs/SETUP.md)**: a step-by-step guide from cloning to a working ride on your own machine.
 
 | Path | What |
 |---|---|
@@ -51,7 +53,14 @@ cp .env.example .env
 npm install && npm run dev            # http://localhost:5173
 ```
 
-To reach the panel from outside this machine during phone testing (D-054), build it against the API's public address and serve that build:
+To reach the panel from outside this machine during phone testing, the simplest way is to let the API serve it under `/admin` on the same public address (D-060):
+
+```bash
+cd admin && VITE_BASE_PATH=/admin/ VITE_API_BASE_URL= npx vite build --outDir dist-tunnel
+# then start the API with ADMIN_STATIC_DIR=<repo>/admin/dist-tunnel → https://<api host>/admin/
+```
+
+The older way (D-054), a second tunnel for the panel built against the API's public address:
 
 ```bash
 VITE_API_BASE_URL=https://<api-tunnel-host> npm run build
@@ -97,7 +106,7 @@ Production runs from `infra/docker-compose.prod.yml` behind Caddy; deploy, rollb
 | `GET /v1/share/<token>` | Public trip-tracking page (JSON for apps) |
 | `GET /v1/legal/privacy` | Privacy policy page (fill in the company details in `backend/src/modules/legal/privacy.page.ts`) |
 
-### Masked calling (one Aavagaman number for rider ↔ driver calls)
+### Masked calling (one BlinCab number for rider ↔ driver calls)
 
 Calls are bridged through a cloud-telephony number so neither party sees the other's phone (D-058). The code talks to [Exotel](https://exotel.com); `CALL_PROVIDER=stub` exercises the whole flow without placing calls, `none` falls back to the phone dialer after the driver arrives.
 

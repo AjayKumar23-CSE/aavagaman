@@ -63,18 +63,13 @@ class AuthScaffold extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Row(
                         children: [
-                          const AavagamanMark(size: 52),
+                          const BlinCabVehicles(width: 104),
                           const SizedBox(width: 14),
-                          Column(
+                          BlinCabWordmark(
+                            text: appName,
+                            tagline: tagline,
+                            size: 22,
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(appName, style: t.titleLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.w800)),
-                              if (tagline != null)
-                                Text(
-                                  tagline!.toUpperCase(),
-                                  style: t.labelSmall?.copyWith(color: Colors.white.withValues(alpha: 0.75), letterSpacing: 2),
-                                ),
-                            ],
                           ),
                         ],
                       ),

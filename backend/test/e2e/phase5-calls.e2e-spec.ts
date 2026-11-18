@@ -1,5 +1,5 @@
 /**
- * Masked calling (D-058): rider and driver call each other through the Aavagaman number.
+ * Masked calling (D-058): rider and driver call each other through the BlinCab number.
  * .env.test uses the stub provider (+911140001234, 5 s between calls, callback token).
  */
 import { NestExpressApplication } from '@nestjs/platform-express';

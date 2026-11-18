@@ -97,13 +97,13 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'Aavagaman'**
+  /// **'BlinCab'**
   String get appTitle;
 
   /// No description provided for @appTagline.
   ///
   /// In en, this message translates to:
-  /// **'Safar • Aapke Saath'**
+  /// **'Bike • Cab • Auto'**
   String get appTagline;
 
   /// No description provided for @splashQuote.
@@ -154,10 +154,52 @@ abstract class AppLocalizations {
   /// **'{count, plural, =0{No cars nearby right now} =1{1 car nearby} other{{count} cars nearby}}'**
   String homeNearbyCars(int count);
 
+  /// No description provided for @alertChannelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Ride updates'**
+  String get alertChannelName;
+
+  /// No description provided for @alertChannelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver accepted your ride, driver arrived'**
+  String get alertChannelDescription;
+
+  /// No description provided for @alertAcceptedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Driver on the way'**
+  String get alertAcceptedTitle;
+
+  /// No description provided for @alertAcceptedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{driver} accepted your ride.'**
+  String alertAcceptedBody(String driver);
+
+  /// No description provided for @alertArrivedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your driver has arrived'**
+  String get alertArrivedTitle;
+
+  /// No description provided for @alertArrivedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{driver} is waiting at the pickup.'**
+  String alertArrivedBody(String driver);
+
+  /// No description provided for @alertYourDriver.
+  ///
+  /// In en, this message translates to:
+  /// **'Your driver'**
+  String get alertYourDriver;
+
   /// No description provided for @searchTitle.
   ///
   /// In en, this message translates to:
-  /// **'Set drop location'**
+  /// **'Plan your ride'**
   String get searchTitle;
 
   /// No description provided for @searchHint.
@@ -165,6 +207,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search for a place or address'**
   String get searchHint;
+
+  /// No description provided for @searchPickupHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter pickup location'**
+  String get searchPickupHint;
+
+  /// No description provided for @searchLocating.
+  ///
+  /// In en, this message translates to:
+  /// **'Finding your location…'**
+  String get searchLocating;
+
+  /// No description provided for @searchUseCurrentLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Use current location'**
+  String get searchUseCurrentLocation;
+
+  /// No description provided for @searchPickupNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your pickup location first.'**
+  String get searchPickupNeeded;
 
   /// No description provided for @searchMinChars.
   ///
@@ -457,7 +523,7 @@ abstract class AppLocalizations {
   /// No description provided for @assignedCallViaHint.
   ///
   /// In en, this message translates to:
-  /// **'Calls go through Aavagaman\'s number, so your number stays private'**
+  /// **'Calls go through BlinCab\'s number, so your number stays private'**
   String get assignedCallViaHint;
 
   /// No description provided for @callConnecting.

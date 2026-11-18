@@ -7,22 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ride_shared/ride_shared.dart';
 
-import 'brand_assets_test.dart' show loadFonts;
+import 'brand_assets_test.dart' show loadArt, loadFonts;
 
 final out = Platform.environment['RIDE_BRAND_OUT'];
 
 const samples = <String, SplashLook>{
-  'A · untouched': SplashLook(dim: 0, saturation: 1, markSize: 88),
-  'B · muted + dim (shipped)': SplashLook.standard,
-  'C · dusk green tint': SplashLook(dim: 0.3, saturation: 0.6, tint: Color(0x400F3D2E)),
-  'D · soft blur': SplashLook(dim: 0.32, saturation: 0.8, blur: 2.5),
-  'E · night': SplashLook(dim: 0.55, saturation: 0.5),
+  'A · plain black (brand board)': SplashLook(photo: false),
+  'B · night (shipped)': SplashLook.standard,
+  'C · dusk': SplashLook(dim: 0.4, saturation: 0.6),
+  'D · soft blur': SplashLook(dim: 0.5, saturation: 0.6, blur: 2.5),
+  'E · untouched': SplashLook(dim: 0, saturation: 1),
 };
 
 void main() {
   if (out == null) return;
   setUpAll(loadFonts);
   testWidgets('splash samples', (tester) async {
+    await loadArt(tester);
     tester.view.physicalSize = Size(412.0 * samples.length, 914);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
@@ -65,13 +66,6 @@ void main() {
             ],
           ),
         ),
-      ),
-    );
-    await tester.pump();
-    await tester.runAsync(
-      () => precacheImage(
-        const AssetImage(Brand.splashAsset, package: 'ride_shared'),
-        tester.element(find.byType(SplashArt).first),
       ),
     );
     await tester.pump();

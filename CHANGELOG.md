@@ -4,6 +4,24 @@ All notable changes, per build phase (SPEC §18). Conventional commits.
 
 ## [Unreleased] — Phase 5: Hardening and release (in progress)
 
+### Ride alerts
+- Rider: a chime and vibration when a driver accepts the ride and again when the driver arrives (`DeviceRideAlert`, bundled `ride_update.wav`, notification stream so silent mode is respected). In the background it is a heads-up notification on the new `ride_updates` channel with the same chime. Notification permission is asked when a ride is booked. Opening the app on an already accepted ride stays quiet.
+- Driver: an offer that arrives while the app is in the background (socket still up) now also shows the full-screen offer notification, silent because the looping offer tone already plays; it is removed with the last open request.
+- `res/raw/keep.xml` in both apps: release builds had stripped the notification sounds (`offer.wav`, `ride_update.wav`) because they are referenced only by name, so a channel would have used the default sound.
+- Still needed for alerts when an app is closed: a Firebase project (`google-services.json` in both apps, service account on the server). Until then pushes are off and only a running app rings.
+
+### Rider: pickup on the search screen
+- "Where to?" opens **Plan your ride** with two fields, like Ola/Uber: the pickup starts on the rider's current location and follows new GPS fixes; the drop field has the focus. Tapping the pickup searches or pins another place, or "Use current location" restores the GPS one; a chosen pickup no longer moves with the GPS.
+- Without a GPS fix the pickup stays empty instead of silently using the Connaught Place map fallback; the drop waits with "Set your pickup location first." "Where to?" also clears a drop left over from an earlier booking.
+
+### Admin through the API tunnel (D-060)
+- Admin **Settings** (change password) is hidden from the menu and routes for now (owner's request, 2026-10-31); the page file stays.
+- `ADMIN_STATIC_DIR` makes the API serve a `/admin/`-based build of the panel under `/admin`, so testers reach it on the API's public address; the panel's router and API base follow Vite's `BASE_URL`. `ride-dev.sh` builds `admin/dist-tunnel` and starts the API with it.
+
+### Brand: BlinCab (D-059)
+- Renamed the product **BlinCab** ("Bike • Cab • Auto") with the owner's logo: the three vehicles are the mark (transparent PNG in `ride_shared/assets`, no text in the icon); `BlinCabVehicles`, `BlinCabWordmark` and `BlinCabIcon` replace the drawn `AavagamanMark`. Splash: India Gate sunk to night, the vehicles over an animated `BrandRoad` strip, the name set below with "Cab" in yellow. Theme: black/yellow (rider) and dark amber (driver) primaries, neutral dark surfaces. New launcher icons (driver tile has a yellow rim), launch screen, admin logo and title, Play Store icons.
+- Android package names: `com.blincab.rider` / `com.blincab.driver` (new installs; the Maps key restriction must list them). App labels, ARB titles, API summaries and docs say BlinCab.
+
 ### Added
 - **Admin panel (Phase 4 pages)**: Dashboard (today's tiles, rides-by-status chart, backend health), Live map (Leaflet + `admin:live`, drivers by state, active rides, SOS/alert toasts), Rides list and detail (timeline, GPS track, offers, payment; cancel / reassign / adjust fare / mark cash with reason dialogs), Riders (block/unblock), Fare config (history + new version with live preview), Service areas (draw/edit/import GeoJSON), Reports (charts, table, CSV download), Settlements (week navigation, generate, mark settled), SOS (open/acknowledged), Audit log, Settings (password change). Screenshots in `docs/screenshots/`.
 - `GET /metrics` (Prometheus text; `METRICS_TOKEN`), nightly `ride_tracks` retention job (`TRACK_RETENTION_DAYS`, 03:00 IST).

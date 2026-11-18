@@ -1,3 +1,7 @@
+/**
+ * Where the API lives. Empty means "same origin": the panel is then served by the API itself
+ * under /admin (ADMIN_STATIC_DIR, D-060), so one public address carries both.
+ */
 export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3000';
 
 /**
@@ -5,7 +9,7 @@ export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL ?? 'http:/
  * header is present (WebSocket upgrades are exempt). Sent only while the API is reached
  * through an ngrok tunnel, e.g. during phone testing from a laptop.
  */
-const TUNNEL_HEADERS: Record<string, string> = /\.ngrok(-free)?\.(app|dev)\b/.test(API_BASE_URL)
+const TUNNEL_HEADERS: Record<string, string> = /\.ngrok(-free)?\.(app|dev)\b/.test(API_BASE_URL || window.location.origin)
   ? { 'ngrok-skip-browser-warning': '1' }
   : {};
 

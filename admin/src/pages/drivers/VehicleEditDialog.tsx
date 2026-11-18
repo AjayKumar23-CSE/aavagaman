@@ -133,7 +133,7 @@ export default function VehicleEditDialog({ vehicle, onSave, onClose }: Props) {
           <button
             type="submit"
             disabled={busy}
-            className="rounded-md bg-[#0F3D2E] px-4 py-2 text-sm font-medium text-white hover:bg-[#145C45] disabled:opacity-50"
+            className="rounded-md bg-[#111111] px-4 py-2 text-sm font-medium text-white hover:bg-[#2A2A2A] disabled:opacity-50"
           >
             {busy ? 'Saving…' : 'Save'}
           </button>

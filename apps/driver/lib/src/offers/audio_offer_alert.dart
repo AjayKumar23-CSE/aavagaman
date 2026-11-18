@@ -1,6 +1,9 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
+import 'package:ride_shared/ride_shared.dart';
 import 'package:vibration/vibration.dart';
+
+import '../push/push_setup.dart';
 
 import 'offer_alert.dart';
 
@@ -60,6 +63,14 @@ class AudioOfferAlert implements OfferAlert {
       debugPrint('vibration cancel: $e');
     }
   }
+
+  /// Silent: the looping tone above is already playing.
+  @override
+  Future<void> notify(RideOffer offer) =>
+      showOfferNotification(rideId: offer.rideId, pickup: offer.pickup.address, expiresAt: offer.expiresAt, silent: true);
+
+  @override
+  Future<void> clearNotification() => cancelOfferNotification();
 
   Future<void> dispose() async {
     await stop();

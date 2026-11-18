@@ -1,12 +1,12 @@
 # Play Store release notes (SPEC §17.5, §20 Phase 5)
 
-Two apps, both Android-first: **Rider** (`com.rideplatform.rider`) and **Driver** (`com.rideplatform.driver`). Track: internal testing → closed testing (at least 12 testers for 14 days on a new personal developer account) → production.
+Two apps, both Android-first: **Rider** (`com.blincab.rider`) and **Driver** (`com.blincab.driver`). Track: internal testing → closed testing (at least 12 testers for 14 days on a new personal developer account) → production.
 
 ## Before the first upload
 
 - Signing keys: generate one upload keystore per app (`keytool -genkeypair -v -keystore rider-upload.jks -alias upload -keyalg RSA -keysize 2048 -validity 10000`), keep them with the client, and give CI the base64 of each plus the passwords as secrets (`RIDER_KEYSTORE_BASE64`, `RIDER_KEYSTORE_PASSWORD`, `RIDER_KEY_ALIAS`, `RIDER_KEY_PASSWORD`, same for `DRIVER_*`). Enrol in Play App Signing.
 - Version code comes from the CI run number (`--build-number`); the version name is the tag (`rider-v1.0.0`).
-- CI builds the `prod` flavor (`--flavor prod`) with the repo variables `API_BASE_URL`, `GOOGLE_MAPS_API_KEY` and `SENTRY_DSN`; it refuses to build if the keystore secret is missing. The `dev` flavor (`com.rideplatform.rider.dev` / `.driver.dev`) is for staging testers and is not uploaded to Play.
+- CI builds the `prod` flavor (`--flavor prod`) with the repo variables `API_BASE_URL`, `GOOGLE_MAPS_API_KEY` and `SENTRY_DSN`; it refuses to build if the keystore secret is missing. The `dev` flavor (`com.blincab.rider.dev` / `.driver.dev`) is for staging testers and is not uploaded to Play.
 - Firebase project with both Android apps added; `google-services.json` placed in `apps/<app>/android/app/` and the Google Services Gradle plugin enabled (both are TODOs in the Gradle files).
 - Google Maps Platform key restricted to the package names and SHA-1s (add the `.dev` packages if staging builds need maps); Places API (New) enabled.
 - Firebase: register the `.dev` package names as well if push is needed on staging builds.
@@ -16,9 +16,9 @@ Two apps, both Android-first: **Rider** (`com.rideplatform.rider`) and **Driver*
 
 **Rider — short description**: Book a sedan across Delhi NCR in two taps: upfront fare range, live tracking, trip OTP and SOS.
 
-**Rider — full description**: Aavagaman is a simple cab-booking app for Delhi, Gurugram, Faridabad, Noida, Greater Noida and Ghaziabad. See the fare range before you book, watch your driver arrive live, share your trip with family, and pay by cash or UPI/card. Every trip starts with a 4-digit OTP so only you can begin it. SOS calls 112 and alerts our team.
+**Rider — full description**: BlinCab is a simple bike, auto and cab booking app for Delhi, Gurugram, Faridabad, Noida, Greater Noida and Ghaziabad. See the fare range before you book, watch your driver arrive live, share your trip with family, and pay by cash or UPI/card. Every trip starts with a 4-digit OTP so only you can begin it. SOS calls 112 and alerts our team.
 
-**Driver — short description**: Drive with Aavagaman in Delhi NCR: go online, accept nearby requests, navigate, and track your earnings.
+**Driver — short description**: Drive with BlinCab in Delhi NCR: go online, accept nearby requests, navigate, and track your earnings.
 
 **Driver — full description**: For verified partner drivers. Go online when you want to drive, receive requests from riders near you, navigate with Google Maps, start each trip with the rider's OTP, collect cash or receive online payments, and see today's and this week's earnings. Weekly settlements are prepared automatically.
 
@@ -42,7 +42,7 @@ Data is encrypted in transit (HTTPS/WSS). Users can request deletion from the ap
 
 - Feature: receiving ride requests and sharing live position with the rider while the driver is online, including when the app is in the background or the screen is off.
 - Why foreground service with location type: continuous location is required to match drivers to nearby riders and to show the rider where their car is.
-- In-app prominent disclosure before requesting background location: "To receive ride requests and share your live location with riders while you are online, Aavagaman collects location data even when the app is closed or not in use."
+- In-app prominent disclosure before requesting background location: "To receive ride requests and share your live location with riders while you are online, BlinCab collects location data even when the app is closed or not in use."
 - Demo video: show the Online switch, the persistent "You are online" notification, the phone locked, then a request popup arriving.
 
 ## Testing checklist before each production push (SPEC §19)

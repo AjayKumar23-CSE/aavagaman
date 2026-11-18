@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Which app the theme is for: the rider app is blue, the driver app green,
+/// Which app the theme is for: the rider app is black, the driver app amber,
 /// so a driver testing both never confuses them. Everything else is shared.
 enum AppBrand { rider, driver }
 
@@ -27,13 +27,13 @@ class AppColors extends ThemeExtension<AppColors> {
   final Color successContainer;
   final Color onSuccessContainer;
 
-  /// Saffron highlight: fares, the trip OTP, earnings.
+  /// Amber highlight: fares, the trip OTP, earnings.
   final Color accent;
   final Color onAccent;
   final Color accentContainer;
   final Color onAccentContainer;
 
-  /// Deep navy used for immersive screens (offer popup, hero headers).
+  /// Near-black used for immersive screens (offer popup, hero headers).
   final Color ink;
 
   /// Brand gradient (hero headers, the brand mark).
@@ -122,9 +122,10 @@ class AppTheme {
   static ThemeData _build(AppBrand brand, Brightness brightness) {
     final dark = brightness == Brightness.dark;
     final (seed, primaryLight, primaryDark) = switch (brand) {
-      // Aavagaman (D-057): deep green for riders, leaf green for drivers; mint on dark.
-      AppBrand.rider => (const Color(0xFF0F3D2E), const Color(0xFF0F3D2E), const Color(0xFF4ADE80)),
-      AppBrand.driver => (const Color(0xFF15803D), const Color(0xFF15803D), const Color(0xFF4ADE80)),
+      // BlinCab (D-059): riders get the logo's black with yellow on it, drivers a
+      // dark amber so the two apps tell apart; both turn taxi yellow on dark.
+      AppBrand.rider => (const Color(0xFF141414), const Color(0xFF141414), const Color(0xFFFFD714)),
+      AppBrand.driver => (const Color(0xFF8A6500), const Color(0xFF8A6500), const Color(0xFFFFD714)),
     };
     final base = ColorScheme.fromSeed(
       seedColor: seed,
@@ -134,9 +135,9 @@ class AppTheme {
     final scheme = dark
         ? base.copyWith(
             primary: primaryDark,
-            onPrimary: const Color(0xFF052E16),
-            primaryContainer: const Color(0xFF14532D),
-            onPrimaryContainer: const Color(0xFFBBF7D0),
+            onPrimary: const Color(0xFF1A1400),
+            primaryContainer: const Color(0xFF3D3000),
+            onPrimaryContainer: const Color(0xFFFFE98A),
             tertiary: const Color(0xFFFBBF24),
             onTertiary: const Color(0xFF3B2600),
             tertiaryContainer: const Color(0xFF4A3300),
@@ -145,24 +146,24 @@ class AppTheme {
             onError: const Color(0xFF3B0A0C),
             errorContainer: const Color(0xFF5A1E22),
             onErrorContainer: const Color(0xFFFFDADC),
-            surface: const Color(0xFF080F14),
-            onSurface: const Color(0xFFE6EAF2),
-            onSurfaceVariant: const Color(0xFFA3ADC2),
-            surfaceContainerLowest: const Color(0xFF05090C),
-            surfaceContainerLow: const Color(0xFF0E1A1F),
-            surfaceContainer: const Color(0xFF13222A),
-            surfaceContainerHigh: const Color(0xFF1A2C34),
-            surfaceContainerHighest: const Color(0xFF22363F),
-            outline: const Color(0xFF3A4F55),
-            outlineVariant: const Color(0xFF263247),
-            inverseSurface: const Color(0xFFE6EAF2),
-            onInverseSurface: const Color(0xFF080F14),
+            surface: const Color(0xFF0B0B0B),
+            onSurface: const Color(0xFFEDEDED),
+            onSurfaceVariant: const Color(0xFFA6A6A6),
+            surfaceContainerLowest: const Color(0xFF050505),
+            surfaceContainerLow: const Color(0xFF121212),
+            surfaceContainer: const Color(0xFF191919),
+            surfaceContainerHigh: const Color(0xFF212121),
+            surfaceContainerHighest: const Color(0xFF2A2A2A),
+            outline: const Color(0xFF3D3D3D),
+            outlineVariant: const Color(0xFF262626),
+            inverseSurface: const Color(0xFFEDEDED),
+            onInverseSurface: const Color(0xFF0B0B0B),
           )
         : base.copyWith(
             primary: primaryLight,
-            onPrimary: Colors.white,
-            primaryContainer: brand == AppBrand.rider ? const Color(0xFFD7F0E3) : const Color(0xFFDCFCE7),
-            onPrimaryContainer: brand == AppBrand.rider ? const Color(0xFF0F3D2E) : const Color(0xFF14532D),
+            onPrimary: brand == AppBrand.rider ? const Color(0xFFFFD714) : Colors.white,
+            primaryContainer: brand == AppBrand.rider ? const Color(0xFFFFF4C2) : const Color(0xFFFFECA3),
+            onPrimaryContainer: brand == AppBrand.rider ? const Color(0xFF3D3000) : const Color(0xFF4A3A00),
             secondary: const Color(0xFF334155),
             onSecondary: Colors.white,
             secondaryContainer: const Color(0xFFE9EDF5),
@@ -199,9 +200,9 @@ class AppTheme {
             onAccent: Color(0xFF3B2600),
             accentContainer: Color(0xFF4A3300),
             onAccentContainer: Color(0xFFFFE2A8),
-            ink: Color(0xFF05090C),
-            gradientStart: Color(0xFF0F3D2E),
-            gradientEnd: Color(0xFF080F14),
+            ink: Color(0xFF050505),
+            gradientStart: Color(0xFF1F1F1F),
+            gradientEnd: Color(0xFF050505),
             shadow: Color(0x66000000),
           )
         : AppColors(
@@ -213,9 +214,9 @@ class AppTheme {
             onAccent: Colors.white,
             accentContainer: const Color(0xFFFFF1D6),
             onAccentContainer: const Color(0xFF7A4A00),
-            ink: const Color(0xFF080F14),
-            gradientStart: brand == AppBrand.rider ? const Color(0xFF145C45) : const Color(0xFF15803D),
-            gradientEnd: brand == AppBrand.rider ? const Color(0xFF0B2A20) : const Color(0xFF0F3D2E),
+            ink: const Color(0xFF0A0A0A),
+            gradientStart: brand == AppBrand.rider ? const Color(0xFF262626) : const Color(0xFF3A2F00),
+            gradientEnd: brand == AppBrand.rider ? const Color(0xFF050505) : const Color(0xFF0A0A0A),
             shadow: const Color(0x140F172A),
           );
 

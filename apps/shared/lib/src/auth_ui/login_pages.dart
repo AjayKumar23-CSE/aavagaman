@@ -63,13 +63,13 @@ class _SplashPageState extends ConsumerState<SplashPage> {
     final error = _restoreError ?? widget.error;
     final retry = _restoreError != null ? _restore : widget.onRetry;
     return Scaffold(
-      backgroundColor: Brand.charcoal,
+      backgroundColor: Brand.black,
       body: SplashArt(
         appName: widget.strings.appName,
         tagline: widget.strings.tagline,
         quote: widget.strings.splashQuote,
         footer: error == null
-            ? RouteLoader(size: 40, stroke: 4, color: Brand.mint, track: Colors.white.withValues(alpha: 0.12))
+            ? RouteLoader(size: 40, stroke: 4, color: Brand.yellow, track: Colors.white.withValues(alpha: 0.12))
             : Material(
                 color: Colors.transparent,
                 child: ErrorBanner(

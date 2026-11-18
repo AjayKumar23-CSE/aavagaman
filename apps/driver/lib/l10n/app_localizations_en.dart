@@ -9,10 +9,10 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Aavagaman Driver';
+  String get appTitle => 'BlinCab Driver';
 
   @override
-  String get appTagline => 'Safar • Aapke Saath';
+  String get appTagline => 'Bike • Cab • Auto';
 
   @override
   String get splashQuote => 'Har safar ka apna ek maqsad hota hai.';
@@ -174,10 +174,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tripCallHint => 'Calling unlocks when you arrive';
 
   @override
-  String get tripCallVia => 'Call via Aavagaman';
+  String get tripCallVia => 'Call via BlinCab';
 
   @override
-  String get tripNumberPrivate => 'Number private · calls go via Aavagaman';
+  String get tripNumberPrivate => 'Number private · calls go via BlinCab';
 
   @override
   String callConnecting(String number) {

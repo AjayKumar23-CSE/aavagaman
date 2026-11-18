@@ -118,6 +118,34 @@ void main() {
     await tester.pumpWidget(const SizedBox());
   });
 
+  testWidgets('offer while the app is in the background: tone plus a full-screen notification', (tester) async {
+    final h = await launchOnline(tester);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+
+    h.sockets.emit('ride:offer', offerJson());
+    await tester.pumpAndSettle();
+    expect(h.alert.ringing, isTrue);
+    expect(h.alert.notified, [rideA]);
+
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('offer-reject-$rideA')));
+    await tester.pumpAndSettle();
+    expect(h.alert.ringing, isFalse);
+    expect(h.alert.cleared, greaterThan(0), reason: 'the notification goes with the last request');
+    await tester.pumpWidget(const SizedBox());
+  });
+
+  testWidgets('offer with the app open: tone only, no notification', (tester) async {
+    final h = await launchOnline(tester);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    h.sockets.emit('ride:offer', offerJson());
+    await tester.pumpAndSettle();
+    expect(h.alert.ringing, isTrue);
+    expect(h.alert.notified, isEmpty);
+    await tester.pumpWidget(const SizedBox());
+  });
+
   testWidgets('Reject emits driver:offer:reject, stops the tone and returns Home', (tester) async {
     final h = await launchOnline(tester);
     final offer = offerJson();

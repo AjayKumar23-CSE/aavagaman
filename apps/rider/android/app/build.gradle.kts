@@ -11,17 +11,19 @@ plugins {
 }
 
 android {
-    namespace = "com.rideplatform.rider"
+    namespace = "com.blincab.rider"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
+        // flutter_local_notifications uses java.time APIs on older Android versions.
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
 
     defaultConfig {
-        applicationId = "com.rideplatform.rider"
+        applicationId = "com.blincab.rider"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         // Plugins (flutter_secure_storage, firebase_messaging) need API 23+.
@@ -49,11 +51,11 @@ android {
             dimension = "env"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            manifestPlaceholders["appLabel"] = "Aavagaman (dev)"
+            manifestPlaceholders["appLabel"] = "BlinCab (dev)"
         }
         create("prod") {
             dimension = "env"
-            manifestPlaceholders["appLabel"] = "Aavagaman"
+            manifestPlaceholders["appLabel"] = "BlinCab"
         }
     }
 
@@ -111,4 +113,8 @@ kotlin {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
 }

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ride_shared/ride_shared.dart';
 
@@ -76,7 +76,12 @@ class OfferController extends Notifier<OfferState> {
     _cancelTimers(offer.rideId);
     final wasEmpty = state.offers.isEmpty;
     state = state.copyWith(offers: [...state.offers.where((o) => o.rideId != offer.rideId), offer]);
-    if (wasEmpty) unawaited(ref.read(offerAlertProvider).start());
+    final alert = ref.read(offerAlertProvider);
+    if (wasEmpty) unawaited(alert.start());
+    // Backgrounded but still connected (the location service keeps the app
+    // alive): wake the screen like Ola/Uber instead of only ringing.
+    final life = WidgetsBinding.instance.lifecycleState;
+    if (life != null && life != AppLifecycleState.resumed) unawaited(alert.notify(offer));
     _expiry[offer.rideId] = Timer(offer.remaining() + const Duration(seconds: 1), () => _onExpired(offer.rideId));
   }
 
@@ -88,7 +93,11 @@ class OfferController extends Notifier<OfferState> {
     if (state.byId(rideId) == null && error == null) return;
     final rest = state.offers.where((o) => o.rideId != rideId).toList();
     state = state.copyWith(offers: rest, clearAccepting: state.acceptingId == rideId, error: error);
-    if (rest.isEmpty) unawaited(ref.read(offerAlertProvider).stop());
+    if (rest.isEmpty) {
+      final alert = ref.read(offerAlertProvider);
+      unawaited(alert.stop());
+      unawaited(alert.clearNotification());
+    }
   }
 
   /// Returns the accepted ride, or null when the accept failed (the error
@@ -98,7 +107,9 @@ class OfferController extends Notifier<OfferState> {
     if (offer == null || state.accepting) return null;
     _cancelTimers(rideId);
     state = state.copyWith(acceptingId: rideId);
-    unawaited(ref.read(offerAlertProvider).stop());
+    final alert = ref.read(offerAlertProvider);
+    unawaited(alert.stop());
+    unawaited(alert.clearNotification());
     final rt = ref.read(realtimeClientProvider);
     try {
       Ride ride;

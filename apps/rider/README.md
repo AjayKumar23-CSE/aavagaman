@@ -72,7 +72,8 @@ map builder (`mapBuilderProvider`) so no platform view is needed.
 - **Phase 3 screens:** trip in progress (route line), fare & payment, rating, Share trip
   (`share_token` link) and SOS are stubbed (disabled buttons / plain status card).
 - **Recent places** live in memory for the session only; **pickup address** is the literal
-  "Current location" (no reverse geocoding yet).
+  "Current location" (no reverse geocoding yet). The search screen shows it as an editable
+  pickup field; without a GPS fix the rider sets the pickup there.
 - **Flavors:** the `dev`/`prod` flavors from SPEC §17.5 aren't set up yet. Adding them would
   break the CI release job, which builds without `--flavor`. For now, use `--dart-define`.
 - **Release signing:** builds use debug keys until the Phase 5 CI secrets are wired up.

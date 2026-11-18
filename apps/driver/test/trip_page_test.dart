@@ -109,7 +109,7 @@ void main() {
       tester,
       rideFrom('ride_accepted_driver_view.json', (j) => (j['rider'] as Map)['call_via'] = '+911140001234'),
     );
-    expect(find.textContaining('Number private · calls go via Aavagaman'), findsOneWidget);
+    expect(find.textContaining('Number private · calls go via BlinCab'), findsOneWidget);
     expect(find.textContaining('+91'), findsNothing);
     expect(tester.widget<IconButton>(find.byKey(const Key('call-rider'))).onPressed, isNotNull);
 

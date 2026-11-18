@@ -25,7 +25,7 @@ PhoneBrand brandFor(String? manufacturer) {
 class BatteryGuidePage extends ConsumerWidget {
   const BatteryGuidePage({super.key});
 
-  static const packageName = 'com.rideplatform.driver';
+  static const packageName = 'com.blincab.driver';
 
   Future<void> _openBatterySettings() async {
     try {

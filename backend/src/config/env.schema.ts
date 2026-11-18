@@ -17,6 +17,9 @@ export const envSchema = z
     ENABLE_DOCS: z
       .preprocess((v) => (v === '' ? undefined : v), z.enum(['true', 'false']).default('false'))
       .transform((v) => v === 'true'),
+    // A built admin panel (vite `base: /admin/`) to serve under /admin from this process, so
+    // one public address carries API and panel (testing through a single tunnel, D-060).
+    ADMIN_STATIC_DIR: optional,
 
     DATABASE_URL: required,
     REDIS_URL: required,

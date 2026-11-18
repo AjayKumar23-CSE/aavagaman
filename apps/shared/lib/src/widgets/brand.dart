@@ -3,44 +3,163 @@ import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/material.dart';
 
-/// Aavagaman brand (D-057): colours from the brand board, the mark drawn as
-/// vector code so it is crisp at every size, and the "route" loaders.
+/// BlinCab brand (D-059): the owner's logo, yellow and white line art of an
+/// auto, a cab and a bike, on black. The three vehicles are cut out of
+/// `docs/branding/blincab-logo-source.png` as a transparent PNG and are the
+/// mark (icons, launch screen); the name is set in code where it is shown
+/// inside the app, and the "road" loaders carry the motif.
 abstract final class Brand {
-  /// Splash backdrop inside this package (`Image.asset(..., package: 'ride_shared')`).
+  static const package = 'ride_shared';
+
+  /// Splash backdrop inside this package (`Image.asset(..., package: Brand.package)`).
   static const splashAsset = 'assets/splash_india_gate.jpg';
 
-  static const name = 'Aavagaman';
-  static const tagline = 'Safar • Aapke Saath';
+  /// Auto, cab and bike (1010×440, transparent): the mark without the name.
+  static const vehiclesAsset = 'assets/blincab_vehicles.png';
 
-  static const deepGreen = Color(0xFF0F3D2E); // trust, nature
-  static const freshGreen = Color(0xFF22C55E); // progress, energy
-  static const leaf = Color(0xFF15803D);
-  static const mint = Color(0xFF4ADE80);
-  static const saffron = Color(0xFFF59E0B); // India, warmth
-  static const charcoal = Color(0xFF080F14); // premium, focus
-  static const road = Color(0xFF111827);
+  static const name = 'BlinCab';
+  static const tagline = 'Bike • Cab • Auto';
+
+  static const yellow = Color(0xFFFFD714); // the cab, "Cab" in the wordmark
+  static const amber = Color(0xFFC99A00); // yellow that reads on white
+  static const black = Color(0xFF0A0A0A); // logo background, launch screen
+  static const charcoal = Color(0xFF111111);
+  static const grey = Color(0xFFBDBDBD); // the tagline
+  static const road = Color(0xFF1F1F1F);
 }
 
-/// The mark alone: a green "A" with a road climbing through it to a saffron pin.
-/// Transparent background; [light] draws a white letter for green backgrounds.
-class AavagamanMark extends StatefulWidget {
-  const AavagamanMark({super.key, this.size = 64, this.light = false, this.animated = false});
+/// The mark: auto, cab and bike side by side, [width] wide (height follows the art).
+class BlinCabVehicles extends StatelessWidget {
+  const BlinCabVehicles({super.key, required this.width});
 
-  final double size;
-  final bool light;
+  final double width;
 
-  /// Drives the road: dashes travel up towards the pin and the pin pulses
-  /// (splash screens). Off by default so icons and goldens stay still.
-  final bool animated;
-
-  /// One trip of the dashes plus one pin pulse.
-  static const cycle = Duration(milliseconds: 1600);
+  /// Height / width of the art.
+  static const ratio = 440 / 1010;
 
   @override
-  State<AavagamanMark> createState() => _AavagamanMarkState();
+  Widget build(BuildContext context) => SizedBox(
+    width: width,
+    height: width * ratio,
+    child: Image.asset(Brand.vehiclesAsset, package: Brand.package, fit: BoxFit.contain, filterQuality: FilterQuality.medium),
+  );
 }
 
-class _AavagamanMarkState extends State<AavagamanMark> with SingleTickerProviderStateMixin {
+/// The name set like the logo: white with "Cab" in yellow, the tagline spaced
+/// out in grey underneath. [text] may carry a suffix ("BlinCab Driver").
+class BlinCabWordmark extends StatelessWidget {
+  const BlinCabWordmark({
+    super.key,
+    this.text = Brand.name,
+    this.tagline,
+    this.size = 36,
+    this.color = Colors.white,
+    this.accent = Brand.yellow,
+    this.crossAxisAlignment = CrossAxisAlignment.center,
+  });
+
+  final String text;
+  final String? tagline;
+
+  /// Font size of the name; the tagline is a third of it.
+  final double size;
+  final Color color;
+  final Color accent;
+  final CrossAxisAlignment crossAxisAlignment;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = Theme.of(context).textTheme;
+    final base = (t.displaySmall ?? const TextStyle()).copyWith(
+      color: color,
+      fontSize: size,
+      fontWeight: FontWeight.w800,
+      letterSpacing: -size * 0.02,
+      height: 1.1,
+    );
+    final i = text.indexOf('Cab');
+    final spans = i < 0
+        ? [TextSpan(text: text)]
+        : [
+            TextSpan(text: text.substring(0, i)),
+            TextSpan(text: 'Cab', style: TextStyle(color: accent)),
+            TextSpan(text: text.substring(i + 3)),
+          ];
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: crossAxisAlignment,
+      children: [
+        Text.rich(TextSpan(style: base, children: spans), textAlign: TextAlign.center),
+        if (tagline != null)
+          Padding(
+            padding: EdgeInsets.only(top: size * 0.12),
+            child: Text(
+              tagline!.toUpperCase(),
+              textAlign: TextAlign.center,
+              style: (t.labelLarge ?? const TextStyle()).copyWith(
+                color: color == Colors.white ? Brand.grey : color.withValues(alpha: 0.7),
+                fontSize: size * 0.3,
+                fontWeight: FontWeight.w700,
+                letterSpacing: size * 0.08,
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+enum BrandIconStyle {
+  /// Black tile: the rider app, the admin panel.
+  dark,
+
+  /// Black tile with a yellow rim: the driver app, so both icons tell apart.
+  ring,
+}
+
+/// App icon: the vehicles on a rounded black tile (also the in-app brand badge).
+class BlinCabIcon extends StatelessWidget {
+  const BlinCabIcon({super.key, this.size = 64, this.style = BrandIconStyle.dark, this.radiusFactor = 0.24});
+
+  final double size;
+  final BrandIconStyle style;
+  final double radiusFactor;
+
+  @override
+  Widget build(BuildContext context) {
+    final rim = style == BrandIconStyle.ring ? size * 0.055 : 0.0;
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: Brand.black,
+        borderRadius: BorderRadius.circular(size * radiusFactor),
+        border: rim > 0 ? Border.all(color: Brand.yellow, width: rim) : null,
+      ),
+      child: Center(child: BlinCabVehicles(width: size * 0.86)),
+    );
+  }
+}
+
+/// A strip of road: dark tarmac with yellow centre dashes. [animated] slides
+/// the dashes towards the left, as if the vehicles above were driving on.
+class BrandRoad extends StatefulWidget {
+  const BrandRoad({super.key, required this.width, this.animated = false, this.height});
+
+  final double width;
+  final bool animated;
+
+  /// Defaults to 7% of [width].
+  final double? height;
+
+  /// One dash+gap step.
+  static const cycle = Duration(milliseconds: 700);
+
+  @override
+  State<BrandRoad> createState() => _BrandRoadState();
+}
+
+class _BrandRoadState extends State<BrandRoad> with SingleTickerProviderStateMixin {
   AnimationController? _c;
 
   @override
@@ -50,7 +169,7 @@ class _AavagamanMarkState extends State<AavagamanMark> with SingleTickerProvider
   }
 
   @override
-  void didUpdateWidget(AavagamanMark old) {
+  void didUpdateWidget(BrandRoad old) {
     super.didUpdateWidget(old);
     if (widget.animated && _c == null) _start();
     if (!widget.animated && _c != null) {
@@ -59,7 +178,7 @@ class _AavagamanMarkState extends State<AavagamanMark> with SingleTickerProvider
     }
   }
 
-  void _start() => _c = AnimationController(vsync: this, duration: AavagamanMark.cycle)..repeat();
+  void _start() => _c = AnimationController(vsync: this, duration: BrandRoad.cycle)..repeat();
 
   @override
   void dispose() {
@@ -69,129 +188,51 @@ class _AavagamanMarkState extends State<AavagamanMark> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
+    final size = Size(widget.width, widget.height ?? widget.width * 0.07);
     final c = _c;
-    if (c == null) {
-      return CustomPaint(
-        size: Size.square(widget.size),
-        painter: _MarkPainter(light: widget.light),
-      );
-    }
+    if (c == null) return CustomPaint(size: size, painter: const _RoadPainter(0));
     return AnimatedBuilder(
       animation: c,
-      builder: (_, _) => CustomPaint(
-        size: Size.square(widget.size),
-        painter: _MarkPainter(light: widget.light, phase: c.value, pulse: c.value),
-      ),
+      builder: (_, _) => CustomPaint(size: size, painter: _RoadPainter(c.value)),
     );
   }
 }
 
-class _MarkPainter extends CustomPainter {
-  const _MarkPainter({required this.light, this.phase = 0, this.pulse = 0});
+class _RoadPainter extends CustomPainter {
+  const _RoadPainter(this.phase);
 
-  final bool light;
-
-  /// 0..1: how far the dashes have travelled along one dash+gap period.
+  /// 0..1 of one dash+gap step.
   final double phase;
-
-  /// 0..1: the pin's pulse ring, from tight and bright to wide and gone.
-  final double pulse;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final s = size.shortestSide;
-    final dx = (size.width - s) / 2, dy = (size.height - s) / 2;
-    canvas.translate(dx, dy);
-
-    final letter = Path()
-      ..moveTo(0.13 * s, 0.90 * s)
-      ..lineTo(0.46 * s, 0.14 * s)
-      ..lineTo(0.79 * s, 0.90 * s);
-    final stroke = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.21 * s
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
-
-    // Soft shadow under the letter.
-    canvas.save();
-    canvas.translate(0, 0.025 * s);
+    final w = size.width, h = size.height;
+    final r = Radius.circular(h / 2);
+    canvas.drawRRect(RRect.fromRectAndRadius(Offset.zero & size, r), Paint()..color = Brand.road);
+    // Fade the ends so the strip reads as a stretch of road, not a bar.
+    final fade = Paint()
+      ..shader = const LinearGradient(
+        colors: [Brand.black, Color(0x000A0A0A), Color(0x000A0A0A), Brand.black],
+        stops: [0, 0.18, 0.82, 1],
+      ).createShader(Offset.zero & size);
+    final dash = w * 0.07, gap = w * 0.045;
+    final line = Path()
+      ..moveTo(0, h / 2)
+      ..lineTo(w, h / 2);
+    // Dashes move left: offset the pattern backwards as phase grows.
     canvas.drawPath(
-      letter,
+      dashed(line, dash, gap, offset: (1 - phase) * (dash + gap)),
       Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 0.21 * s
+        ..strokeWidth = h * 0.22
         ..strokeCap = StrokeCap.round
-        ..strokeJoin = StrokeJoin.round
-        ..color = Colors.black.withValues(alpha: 0.22)
-        ..maskFilter = MaskFilter.blur(BlurStyle.normal, 0.03 * s),
+        ..color = Brand.yellow,
     );
-    canvas.restore();
-
-    stroke.shader = LinearGradient(
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
-      colors: light ? const [Colors.white, Color(0xFFD1FAE5)] : const [Brand.mint, Brand.leaf],
-    ).createShader(Rect.fromLTWH(0, 0, s, s));
-    canvas.drawPath(letter, stroke);
-
-    // The road climbs from the bottom left, through the letter, to the pin.
-    final road = Path()
-      ..moveTo(0.20 * s, 1.00 * s)
-      ..quadraticBezierTo(0.42 * s, 0.70 * s, 0.80 * s, 0.34 * s);
-    canvas.drawPath(
-      road,
-      Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 0.12 * s
-        ..strokeCap = StrokeCap.round
-        ..color = Brand.road,
-    );
-    canvas.drawPath(
-      dashed(road, 0.055 * s, 0.045 * s, offset: phase * (0.055 + 0.045) * s),
-      Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 0.018 * s
-        ..strokeCap = StrokeCap.round
-        ..color = Colors.white.withValues(alpha: 0.9),
-    );
-
-    // Saffron pin at the end of the road.
-    final c = Offset(0.80 * s, 0.20 * s);
-    final r = 0.115 * s;
-    // Head and tail are filled separately: one path would leave a winding hole where they overlap.
-    final tail = Path()
-      ..moveTo(c.dx - r * 0.72, c.dy + r * 0.70)
-      ..lineTo(c.dx, c.dy + r * 2.0)
-      ..lineTo(c.dx + r * 0.72, c.dy + r * 0.70)
-      ..close();
-    final shadow = Paint()
-      ..color = Colors.black.withValues(alpha: 0.25)
-      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 0.025 * s);
-    canvas.drawPath(tail.shift(Offset(0, 0.02 * s)), shadow);
-    canvas.drawCircle(c + Offset(0, 0.02 * s), r, shadow);
-    final saffron = Paint()..color = Brand.saffron;
-    if (pulse > 0) {
-      // Pulse ring: a "you are here" ping spreading out from the pin head.
-      final eased = Curves.easeOut.transform(pulse);
-      canvas.drawCircle(
-        c,
-        r * (1 + 1.1 * eased),
-        Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = r * 0.22 * (1 - eased) + 0.5
-          ..color = Brand.saffron.withValues(alpha: 0.55 * (1 - eased)),
-      );
-    }
-    canvas.drawPath(tail, saffron);
-    canvas.drawCircle(c, r, saffron);
-    // The white dot breathes with the pulse.
-    final dot = r * 0.42 * (1 + 0.18 * math.sin(pulse * math.pi));
-    canvas.drawCircle(c, dot, Paint()..color = Colors.white);
+    canvas.drawRRect(RRect.fromRectAndRadius(Offset.zero & size, r), fade);
   }
 
   @override
-  bool shouldRepaint(_MarkPainter old) => old.light != light || old.phase != phase || old.pulse != pulse;
+  bool shouldRepaint(_RoadPainter old) => old.phase != phase;
 }
 
 /// [src] as dashes of [dash] length separated by [gap]; [offset] slides the
@@ -208,37 +249,6 @@ Path dashed(Path src, double dash, double gap, {double offset = 0}) {
     }
   }
   return out;
-}
-
-enum BrandIconStyle { dark, light, green }
-
-/// App icon: the mark on a rounded tile (also the in-app brand badge).
-class AavagamanIcon extends StatelessWidget {
-  const AavagamanIcon({super.key, this.size = 64, this.style = BrandIconStyle.dark, this.radiusFactor = 0.24});
-
-  final double size;
-  final BrandIconStyle style;
-  final double radiusFactor;
-
-  @override
-  Widget build(BuildContext context) {
-    final (gradient, light) = switch (style) {
-      BrandIconStyle.dark => (const [Color(0xFF12302A), Brand.charcoal], false),
-      BrandIconStyle.light => (const [Color(0xFFF8FAF9), Color(0xFFE8EFEB)], false),
-      BrandIconStyle.green => (const [Color(0xFF16A34A), Brand.leaf], true),
-    };
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: gradient),
-        borderRadius: BorderRadius.circular(size * radiusFactor),
-      ),
-      child: Center(
-        child: AavagamanMark(size: size * 0.70, light: light),
-      ),
-    );
-  }
 }
 
 /// Faint road curves for dark brand screens (splash, headers).
@@ -277,7 +287,7 @@ class _RoadBackdropPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeWidth = 0.012 * w
         ..strokeCap = StrokeCap.round
-        ..color = Colors.white.withValues(alpha: 0.14 * opacity),
+        ..color = Brand.yellow.withValues(alpha: 0.35 * opacity),
     );
     final hill = Path()
       ..moveTo(-0.05 * w, 0.80 * h)
@@ -288,7 +298,7 @@ class _RoadBackdropPainter extends CustomPainter {
       Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2
-        ..color = Brand.mint.withValues(alpha: 0.10 * opacity),
+        ..color = Colors.white.withValues(alpha: 0.10 * opacity),
     );
   }
 
@@ -296,13 +306,13 @@ class _RoadBackdropPainter extends CustomPainter {
   bool shouldRepaint(_RoadBackdropPainter old) => old.opacity != opacity;
 }
 
-/// Draws a saffron pin head at [at] (used on loaders and progress rings).
+/// Draws a yellow pin head at [at] (used on loaders and progress rings).
 void paintPinHead(Canvas canvas, Offset at, double radius) {
-  canvas.drawCircle(at, radius, Paint()..color = Brand.saffron);
-  canvas.drawCircle(at, radius * 0.42, Paint()..color = Colors.white);
+  canvas.drawCircle(at, radius, Paint()..color = Brand.yellow);
+  canvas.drawCircle(at, radius * 0.42, Paint()..color = Brand.black);
 }
 
-/// "Route progress" loader: a rotating arc that ends in a saffron pin.
+/// "Route progress" loader: a rotating arc that ends in a yellow pin.
 class RouteLoader extends StatefulWidget {
   const RouteLoader({super.key, this.size = 44, this.stroke = 4.5, this.color, this.track});
 
@@ -441,12 +451,15 @@ class BrandRingPainter extends CustomPainter {
       old.value != value || old.color != color || old.track != track || old.pin != pin || old.gradient != gradient;
 }
 
-/// The splash screen's look, without session logic (so it can be previewed).
-/// How far the India Gate picture recedes behind the mark on the splash.
+/// The splash screen's look, without session logic (so it can be previewed):
+/// how far the India Gate picture recedes behind the logo.
 class SplashLook {
-  const SplashLook({this.dim = 0.34, this.saturation = 0.7, this.blur = 0, this.tint, this.markSize = 104});
+  const SplashLook({this.photo = true, this.dim = 0.62, this.saturation = 0.45, this.blur = 0, this.tint, this.logoFraction = 0.74});
 
-  /// Charcoal veil over the picture (0 = untouched, 1 = black).
+  /// False shows the logo on plain black, as on the brand board.
+  final bool photo;
+
+  /// Black veil over the picture (0 = untouched, 1 = black).
   final double dim;
 
   /// 1 keeps the sunset colours; lower values mute them.
@@ -455,13 +468,14 @@ class SplashLook {
   /// Gaussian blur radius in logical pixels (0 = sharp).
   final double blur;
 
-  /// Optional colour wash (alpha included), e.g. a deep-green dusk.
+  /// Optional colour wash (alpha included).
   final Color? tint;
 
-  /// Size of the mark above the wordmark.
-  final double markSize;
+  /// Width of the vehicles as a fraction of the screen width.
+  final double logoFraction;
 
-  /// The shipped look (chosen 2026-10-18): muted and dimmed so the mark leads.
+  /// The shipped look (D-059): the picture sinks to a night scene so the
+  /// yellow-and-white line art leads.
   static const standard = SplashLook();
 
   /// Colour matrix that scales saturation (Rec. 601 luma weights).
@@ -500,10 +514,10 @@ class SplashArt extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = Theme.of(context).textTheme;
     // The brand board's India Gate sunset (docs/branding/splash-india-gate-source.png),
-    // cropped to the screen; the sky and road take the wordmark and the quote.
+    // cropped to the screen and sunk to night; the mark and the name sit in the sky.
     Widget backdrop = Image.asset(
       Brand.splashAsset,
-      package: 'ride_shared',
+      package: Brand.package,
       fit: BoxFit.cover,
       alignment: Alignment.center,
     );
@@ -517,12 +531,12 @@ class SplashArt extends StatelessWidget {
       );
     }
     return ColoredBox(
-      color: Brand.charcoal,
+      color: Brand.black,
       child: Stack(
         fit: StackFit.expand,
         children: [
-          backdrop,
-          if (look.dim > 0) ColoredBox(color: Brand.charcoal.withValues(alpha: look.dim)),
+          if (look.photo) backdrop,
+          if (look.photo && look.dim > 0) ColoredBox(color: Brand.black.withValues(alpha: look.dim)),
           if (look.tint != null) ColoredBox(color: look.tint!),
           const DecoratedBox(
             decoration: BoxDecoration(
@@ -530,47 +544,49 @@ class SplashArt extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 stops: [0, 0.35, 0.7, 1],
-                colors: [Color(0xB3080F14), Color(0x00080F14), Color(0x00080F14), Color(0xCC080F14)],
+                colors: [Color(0xB30A0A0A), Color(0x000A0A0A), Color(0x000A0A0A), Color(0xCC0A0A0A)],
               ),
             ),
           ),
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(24, 24, 24, 20),
-              child: Column(
-                children: [
-                  // Mark and wordmark in the sky above the sun; the quote over the road.
-                  const Spacer(flex: 1),
-                  AavagamanMark(size: look.markSize, animated: true),
-                  const SizedBox(height: 12),
-                  Text(
-                    appName,
-                    style: t.displaySmall?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: -0.5,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    tagline.toUpperCase(),
-                    style: t.labelLarge?.copyWith(color: Colors.white.withValues(alpha: 0.75), letterSpacing: 3),
-                    textAlign: TextAlign.center,
-                  ),
-                  const Spacer(flex: 15),
-                  Text(
-                    quote,
-                    style: t.titleSmall?.copyWith(
-                      color: Colors.white.withValues(alpha: 0.88),
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 14),
-                  footer,
-                  const SizedBox(height: 6),
-                ],
+              child: LayoutBuilder(
+                builder: (context, box) {
+                  final w = box.maxWidth * look.logoFraction;
+                  return Column(
+                    children: [
+                      const Spacer(flex: 1),
+                      // The mark with the road running behind the wheels, the name set below.
+                      SizedBox(
+                        width: w,
+                        height: w * BlinCabVehicles.ratio,
+                        child: Stack(
+                          alignment: Alignment.topCenter,
+                          children: [
+                            Positioned(top: w * 0.355, child: BrandRoad(width: w * 0.98, animated: true)),
+                            BlinCabVehicles(width: w),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 18),
+                      BlinCabWordmark(text: appName, tagline: tagline, size: 40),
+                      const Spacer(flex: 15),
+                      Text(
+                        quote,
+                        style: t.titleSmall?.copyWith(
+                          color: Colors.white.withValues(alpha: 0.88),
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 14),
+                      footer,
+                      const SizedBox(height: 6),
+                    ],
+                  );
+                },
               ),
             ),
           ),

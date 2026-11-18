@@ -62,7 +62,8 @@ Future<void> setupNotifications() async {
 
 /// Full-screen-intent notification so a locked phone shows the offer
 /// (SPEC §12). Expires with the offer.
-Future<void> showOfferNotification({required String rideId, String? pickup, DateTime? expiresAt}) async {
+/// [silent] when the app already plays the offer tone itself.
+Future<void> showOfferNotification({required String rideId, String? pickup, DateTime? expiresAt, bool silent = false}) async {
   try {
     final l10n = _l10n;
     final ttl = expiresAt?.difference(DateTime.now());
@@ -82,6 +83,7 @@ Future<void> showOfferNotification({required String rideId, String? pickup, Date
           sound: const RawResourceAndroidNotificationSound('offer'),
           timeoutAfter: ttl == null || ttl.isNegative ? 20000 : ttl.inMilliseconds,
           autoCancel: true,
+          silent: silent,
         ),
       ),
       payload: rideId,

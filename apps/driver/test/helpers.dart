@@ -451,6 +451,15 @@ class RecordingOfferAlert implements OfferAlert {
 
   @override
   Future<void> stop() async => stops++;
+
+  final notified = <String>[];
+  int cleared = 0;
+
+  @override
+  Future<void> notify(RideOffer offer) async => notified.add(offer.rideId);
+
+  @override
+  Future<void> clearNotification() async => cleared++;
 }
 
 /// Holds the fake socket the realtime client creates, so tests can drive it.

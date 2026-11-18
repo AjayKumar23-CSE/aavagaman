@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
-  "appTitle": "Aavagaman",
-  "appTagline": "Safar • Aapke Saath",
+  "appTitle": "BlinCab",
+  "appTagline": "Bike • Cab • Auto",
   "splashQuote": "Har safar ka apna ek maqsad hota hai.",
   "homeWhereTo": "Where to?",
   "homeCurrentLocation": "Current location",
@@ -17,8 +17,33 @@
       }
     }
   },
-  "searchTitle": "Set drop location",
+  "alertChannelName": "Ride updates",
+  "alertChannelDescription": "Driver accepted your ride, driver arrived",
+  "alertAcceptedTitle": "Driver on the way",
+  "alertAcceptedBody": "{driver} accepted your ride.",
+  "@alertAcceptedBody": {
+    "placeholders": {
+      "driver": {
+        "type": "String"
+      }
+    }
+  },
+  "alertArrivedTitle": "Your driver has arrived",
+  "alertArrivedBody": "{driver} is waiting at the pickup.",
+  "@alertArrivedBody": {
+    "placeholders": {
+      "driver": {
+        "type": "String"
+      }
+    }
+  },
+  "alertYourDriver": "Your driver",
+  "searchTitle": "Plan your ride",
   "searchHint": "Search for a place or address",
+  "searchPickupHint": "Enter pickup location",
+  "searchLocating": "Finding your location…",
+  "searchUseCurrentLocation": "Use current location",
+  "searchPickupNeeded": "Set your pickup location first.",
   "searchMinChars": "Type at least 3 characters",
   "searchNoResults": "No places found",
   "searchUnavailable": "Place search isn't set up on this build. Type the address, then set the location on the map.",
@@ -115,7 +140,7 @@
   "assignedOtpHint": "Share this code with your driver only when you get in.",
   "assignedCall": "Call",
   "assignedCallHint": "Calling unlocks when your driver arrives",
-  "assignedCallViaHint": "Calls go through Aavagaman's number, so your number stays private",
+  "assignedCallViaHint": "Calls go through BlinCab's number, so your number stays private",
   "callConnecting": "Calling you from {number}. Pick up to talk to your driver.",
   "@callConnecting": {
     "placeholders": {

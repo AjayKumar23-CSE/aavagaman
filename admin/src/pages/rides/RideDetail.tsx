@@ -252,7 +252,7 @@ export default function RideDetail() {
                 {calls.length === 0 && (
                   <tr>
                     <td colSpan={4} className="px-5 py-4 text-center text-gray-500">
-                      No calls were made. Calls go through the Aavagaman number, so neither side sees the other's phone.
+                      No calls were made. Calls go through the BlinCab number, so neither side sees the other's phone.
                     </td>
                   </tr>
                 )}

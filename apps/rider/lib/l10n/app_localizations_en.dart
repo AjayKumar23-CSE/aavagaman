@@ -9,10 +9,10 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Aavagaman';
+  String get appTitle => 'BlinCab';
 
   @override
-  String get appTagline => 'Safar • Aapke Saath';
+  String get appTagline => 'Bike • Cab • Auto';
 
   @override
   String get splashQuote => 'Har safar ka apna ek maqsad hota hai.';
@@ -50,10 +50,48 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get searchTitle => 'Set drop location';
+  String get alertChannelName => 'Ride updates';
+
+  @override
+  String get alertChannelDescription =>
+      'Driver accepted your ride, driver arrived';
+
+  @override
+  String get alertAcceptedTitle => 'Driver on the way';
+
+  @override
+  String alertAcceptedBody(String driver) {
+    return '$driver accepted your ride.';
+  }
+
+  @override
+  String get alertArrivedTitle => 'Your driver has arrived';
+
+  @override
+  String alertArrivedBody(String driver) {
+    return '$driver is waiting at the pickup.';
+  }
+
+  @override
+  String get alertYourDriver => 'Your driver';
+
+  @override
+  String get searchTitle => 'Plan your ride';
 
   @override
   String get searchHint => 'Search for a place or address';
+
+  @override
+  String get searchPickupHint => 'Enter pickup location';
+
+  @override
+  String get searchLocating => 'Finding your location…';
+
+  @override
+  String get searchUseCurrentLocation => 'Use current location';
+
+  @override
+  String get searchPickupNeeded => 'Set your pickup location first.';
 
   @override
   String get searchMinChars => 'Type at least 3 characters';
@@ -224,7 +262,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get assignedCallViaHint =>
-      'Calls go through Aavagaman\'s number, so your number stays private';
+      'Calls go through BlinCab\'s number, so your number stays private';
 
   @override
   String callConnecting(String number) {

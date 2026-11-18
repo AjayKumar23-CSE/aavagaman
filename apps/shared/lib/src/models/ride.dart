@@ -111,7 +111,7 @@ class RideDriver {
   final String phoneMasked;
   final String? phone;
 
-  /// The Aavagaman number a bridged call shows (D-058); set while the trip is
+  /// The BlinCab number a bridged call shows (D-058); set while the trip is
   /// live when masked calling is on. The real number then never arrives.
   final String? callVia;
   final RideVehicle? vehicle;
@@ -156,7 +156,7 @@ class RideRider {
   bool get canBridge => callVia != null && callVia!.isNotEmpty;
 }
 
-/// A call the server bridged through the Aavagaman number (D-058).
+/// A call the server bridged through the BlinCab number (D-058).
 class RideCall {
   const RideCall({required this.id, required this.status, required this.via});
 

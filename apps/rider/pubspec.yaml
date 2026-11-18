@@ -1,5 +1,5 @@
 name: rider
-description: Aavagaman — rider app (SPEC §11).
+description: BlinCab — rider app (SPEC §11).
 version: 0.1.0+1
 publish_to: none
 
@@ -17,6 +17,9 @@ dependencies:
   go_router: ^18.0.1
   ride_shared:
     path: ../shared
+  flutter_local_notifications: ^22.3.1
+  audioplayers: ^6.8.1
+  vibration: ^3.2.1
   google_maps_flutter: ^2.18.2
   geolocator: ^14.1.1
   url_launcher: ^6.3.3
@@ -32,3 +35,5 @@ flutter:
   default-flavor: dev
   uses-material-design: true
   generate: true
+  assets:
+    - assets/sounds/

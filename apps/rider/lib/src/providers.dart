@@ -118,6 +118,11 @@ class BookingDraftController extends Notifier<BookingDraft> {
 
   void setDrop(RidePlace p) => state = state.copyWith(drop: p);
 
+  /// A new booking from Home: [pickup] is null without a GPS fix (the search
+  /// screen then asks for one); any drop from an earlier booking is dropped.
+  void start({RidePlace? pickup, RidePlace? drop}) =>
+      state = BookingDraft(pickup: pickup, drop: drop, payment: state.payment, vehicleType: state.vehicleType);
+
   void setPayment(PaymentMethod m) => state = state.copyWith(payment: m);
 
   void setVehicleType(VehicleType t) => state = state.copyWith(vehicleType: t);

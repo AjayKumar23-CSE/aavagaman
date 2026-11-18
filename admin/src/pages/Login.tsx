@@ -35,10 +35,10 @@ export default function Login() {
         className="w-full max-w-sm space-y-4 rounded-lg border border-gray-200 bg-white p-6 shadow-sm"
       >
         <div className="flex items-center gap-3">
-          <img src="/logo.svg" alt="" className="h-12 w-12" />
+          <img src={`${import.meta.env.BASE_URL}logo.png`} alt="" className="h-12 w-12 rounded-xl" />
           <div>
-            <h1 className="text-xl font-semibold text-gray-900">Aavagaman Admin</h1>
-            <p className="text-sm text-gray-500">Safar • Aapke Saath — sign in to continue</p>
+            <h1 className="text-xl font-semibold text-gray-900">BlinCab Admin</h1>
+            <p className="text-sm text-gray-500">Bike • Cab • Auto — sign in to continue</p>
           </div>
         </div>
         <label className="block">
@@ -72,7 +72,7 @@ export default function Login() {
         <button
           type="submit"
           disabled={busy}
-          className="w-full rounded-md bg-[#0F3D2E] px-4 py-2 text-sm font-medium text-white hover:bg-[#145C45] disabled:opacity-50"
+          className="w-full rounded-md bg-[#111111] px-4 py-2 text-sm font-medium text-white hover:bg-[#2A2A2A] disabled:opacity-50"
         >
           {busy ? 'Signing in…' : 'Sign in'}
         </button>

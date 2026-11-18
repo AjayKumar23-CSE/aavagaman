@@ -19,7 +19,6 @@ import Reports from './pages/Reports';
 import Settlements from './pages/Settlements';
 import Sos from './pages/Sos';
 import Audit from './pages/Audit';
-import Settings from './pages/Settings';
 import 'leaflet/dist/leaflet.css';
 import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
 import './index.css';
@@ -41,11 +40,19 @@ async function safeEnsureSession(): Promise<boolean> {
   }
 }
 
+/** '/admin' when the API serves the built panel (vite `base`, D-060); '' otherwise. */
+const BASENAME = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+/** A browser pathname as the router sees it: without the basename. */
+function routePath(pathname: string): string {
+  return BASENAME && pathname.startsWith(BASENAME) ? pathname.slice(BASENAME.length) || '/' : pathname;
+}
+
 /** Route guard: everything except /login needs a session (refreshing first if only a refresh token is stored). */
 async function requireAuth({ request }: LoaderFunctionArgs) {
   if (await safeEnsureSession()) return null;
   const url = new URL(request.url);
-  const next = url.pathname + url.search;
+  const next = routePath(url.pathname) + url.search;
   return redirect(next === '/' ? '/login' : `/login?next=${encodeURIComponent(next)}`);
 }
 
@@ -73,14 +80,14 @@ const router = createBrowserRouter([
       { path: 'settlements', element: <Settlements /> },
       { path: 'sos', element: <Sos /> },
       { path: 'audit', element: <Audit /> },
-      { path: 'settings', element: <Settings /> },
     ],
   },
-]);
+], { basename: BASENAME });
 
 setAuthFailureHandler(() => {
   queryClient.clear();
-  const { pathname, search } = window.location;
+  const pathname = routePath(window.location.pathname);
+  const { search } = window.location;
   if (pathname !== '/login')
     void router.navigate(`/login?next=${encodeURIComponent(pathname + search)}`, { replace: true });
 });

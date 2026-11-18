@@ -1,4 +1,5 @@
 import type { IncomingMessage } from 'node:http';
+import path from 'node:path';
 import { RequestMethod, ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import express from 'express';
@@ -22,6 +23,16 @@ export function configureApp(app: NestExpressApplication, env: Env) {
   app.use(express.urlencoded({ extended: false, limit: '100kb' }));
   // Behind Caddy on the Docker network: trust private-range proxies for req.ip.
   app.set('trust proxy', 'loopback, uniquelocal');
+  // Optional: the built admin panel under /admin (D-060). Mounted before helmet because the
+  // panel's page loads map tiles and document previews from other hosts, which the API's CSP
+  // forbids; API responses keep their headers.
+  if (env.ADMIN_STATIC_DIR) {
+    const dir = path.resolve(env.ADMIN_STATIC_DIR);
+    app.use('/admin', express.static(dir));
+    app.use(/^\/admin(\/.*)?$/, (_req: express.Request, res: express.Response) =>
+      res.sendFile(path.join(dir, 'index.html')),
+    );
+  }
   app.use(helmet());
   app.enableCors({ origin: env.ADMIN_ORIGIN, credentials: true });
   app.setGlobalPrefix('v1', {

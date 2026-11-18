@@ -1,11 +1,11 @@
-# Aavagaman test builds — notes for testers
+# BlinCab test builds — notes for testers
 
-Thanks for trying Aavagaman. These are early Android test builds that talk to a development
+Thanks for trying BlinCab. These are early Android test builds that talk to a development
 server, so expect rough edges, and please tell us what you see.
 
 ## Install
 
-1. Open the APK you were sent (`aavagaman-rider-…apk` or `aavagaman-driver-…apk`) on your phone.
+1. Open the APK you were sent (`blincab-rider-…apk` or `blincab-driver-…apk`) on your phone.
 2. Android will ask to allow installs from this source; allow it once. The app is signed with a
    test key, so Play Protect may show a warning; choose "Install anyway".
 3. On first start allow **Location** ("while using the app"; drivers also **all the time**) and
@@ -25,7 +25,7 @@ Drivers: register once (name, vehicle type, vehicle number), then an admin appro
 - **Driver**: go online, accept a request, tap Arrived at the pickup, enter the rider's 4-digit
   OTP to start, end the trip, collect cash.
 - **Calling**: tap Call on either side once a driver is assigned. Your phone rings first from the
-  Aavagaman number; answer it and the other person is connected. Neither of you sees the other's
+  BlinCab number; answer it and the other person is connected. Neither of you sees the other's
   number. During the trial only phones we have registered can be called, so tell us your number
   if calls fail.
 - **SOS** dials 112 for real. Please do not test it.

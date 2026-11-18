@@ -1,5 +1,5 @@
-// Renders the Aavagaman mark to PNG for app icons and docs (D-057).
-// Skipped unless RIDE_BRAND_OUT points at an output directory:
+// Renders the BlinCab mark to PNG for app icons, the launch screen, the admin
+// panel and docs (D-059). Skipped unless RIDE_BRAND_OUT points at an output directory:
 //   RIDE_BRAND_OUT=/tmp/brand flutter test --update-goldens test/branding
 import 'dart:io';
 
@@ -21,11 +21,28 @@ Future<void> loadFonts() async {
 /// Android densities: dp multiplier per bucket.
 const densities = {'mdpi': 1.0, 'hdpi': 1.5, 'xhdpi': 2.0, 'xxhdpi': 3.0, 'xxxhdpi': 4.0};
 
-Future<void> render(WidgetTester tester, Widget w, double px, String name) async {
-  tester.view.physicalSize = Size(px, px);
+/// Decodes the brand PNGs so they are painted on the first frame (asset
+/// images load asynchronously in tests).
+Future<void> loadArt(WidgetTester tester) async {
+  await tester.pumpWidget(const SizedBox());
+  final context = tester.element(find.byType(SizedBox));
+  await tester.runAsync(() async {
+    for (final asset in [Brand.vehiclesAsset, Brand.splashAsset]) {
+      await precacheImage(AssetImage(asset, package: Brand.package), context);
+    }
+  });
+}
+
+Future<void> render(WidgetTester tester, Widget w, double px, String name, {double? height}) async {
+  tester.view.physicalSize = Size(px, height ?? px);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
-  await tester.pumpWidget(Center(child: RepaintBoundary(child: SizedBox.square(dimension: px, child: w))));
+  await tester.pumpWidget(
+    MaterialApp(
+      theme: AppTheme.light(),
+      home: Center(child: RepaintBoundary(child: SizedBox(width: px, height: height ?? px, child: w))),
+    ),
+  );
   await expectLater(find.byType(RepaintBoundary).first, matchesGoldenFile(Uri.file('$out/$name.png')));
 }
 
@@ -36,20 +53,37 @@ void main() {
   }
   // Real file I/O must happen outside the test zone.
   setUpAll(loadFonts);
-  for (final (app, style, light) in [('rider', BrandIconStyle.dark, false), ('driver', BrandIconStyle.green, true)]) {
+  for (final (app, style) in [('rider', BrandIconStyle.dark), ('driver', BrandIconStyle.ring)]) {
     testWidgets('$app icons', (tester) async {
+      await loadArt(tester);
       for (final MapEntry(key: bucket, value: m) in densities.entries) {
         // Legacy launcher icon (48 dp) with the tile baked in.
-        await render(tester, AavagamanIcon(size: 48 * m, style: style, radiusFactor: 0.18), 48 * m, '$app-ic_launcher-$bucket');
-        // Adaptive foreground: 108 dp canvas, mark inside the 66 dp safe zone.
-        await render(tester, Center(child: AavagamanMark(size: 56 * m, light: light)), 108 * m, '$app-ic_launcher_foreground-$bucket');
-        // Launch-screen logo (112 dp, transparent).
-        await render(tester, Center(child: AavagamanMark(size: 112 * m, light: false)), 112 * m, '$app-launch_logo-$bucket');
+        await render(tester, BlinCabIcon(size: 48 * m, style: style, radiusFactor: 0.18), 48 * m, '$app-ic_launcher-$bucket');
+        // Adaptive foreground: 108 dp canvas, art inside the 66 dp safe zone, on the
+        // black @color/ic_launcher_background.
+        await render(
+          tester,
+          Center(
+            child: style == BrandIconStyle.ring
+                ? Container(
+                    width: 62 * m,
+                    height: 62 * m,
+                    decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Brand.yellow, width: 3 * m)),
+                    child: Center(child: BlinCabVehicles(width: 48 * m)),
+                  )
+                : BlinCabVehicles(width: 62 * m),
+          ),
+          108 * m,
+          '$app-ic_launcher_foreground-$bucket',
+        );
+        // Launch-screen art (transparent, 160×70 dp) on @color/launch_background.
+        await render(tester, Center(child: BlinCabVehicles(width: 160 * m)), 160 * m, '$app-launch_logo-$bucket', height: 70 * m);
       }
-      await render(tester, AavagamanIcon(size: 512, style: style, radiusFactor: 0.18), 512, '$app-icon-512');
+      await render(tester, BlinCabIcon(size: 512, style: style, radiusFactor: 0.18), 512, '$app-icon-512');
     });
   }
   testWidgets('splash', (tester) async {
+    await loadArt(tester);
     tester.view.physicalSize = const Size(1080, 2400);
     tester.view.devicePixelRatio = 2.625;
     addTearDown(tester.view.reset);
@@ -65,18 +99,12 @@ void main() {
       ),
     ));
     await tester.pump();
-    // Decode the backdrop picture (asset images load asynchronously in tests).
-    await tester.runAsync(() => precacheImage(
-          const AssetImage(Brand.splashAsset, package: 'ride_shared'),
-          tester.element(find.byType(SplashArt)),
-        ));
-    await tester.pump();
     await expectLater(find.byType(RepaintBoundary).first, matchesGoldenFile(Uri.file('$out/splash-1080x2400.png')));
   });
 
   testWidgets('logo', (tester) async {
-    await render(tester, const AavagamanMark(size: 1024), 1024, 'aavagaman-mark-1024');
-    await render(tester, const AavagamanIcon(size: 1024, style: BrandIconStyle.light), 1024, 'aavagaman-tile-light-1024');
-    await render(tester, const AavagamanIcon(size: 1024, style: BrandIconStyle.dark), 1024, 'aavagaman-tile-dark-1024');
+    await loadArt(tester);
+    await render(tester, const BlinCabIcon(size: 1024), 1024, 'blincab-tile-1024');
+    await render(tester, const BlinCabIcon(size: 192), 192, 'admin-logo-192');
   });
 }

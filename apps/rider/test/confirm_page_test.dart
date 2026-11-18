@@ -27,7 +27,7 @@ Future<FakeRideApi> openConfirm(
   // Home → search → confirm would need Places; jump straight to Confirm.
   await tester.tap(find.byKey(const Key('where-to')));
   await tester.pumpAndSettle();
-  expect(find.text('Set drop location'), findsOneWidget);
+  expect(find.text('Plan your ride'), findsOneWidget);
   // Without a Places key the typed address goes to the map picker.
   await tester.enterText(find.byKey(const Key('search-field')), 'India Gate');
   await tester.pump();

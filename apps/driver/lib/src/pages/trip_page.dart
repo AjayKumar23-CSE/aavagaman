@@ -60,7 +60,7 @@ class _TripPageState extends ConsumerState<TripPage> {
     }
   }
 
-  /// Call the rider through the Aavagaman number: the server rings this phone
+  /// Call the rider through the BlinCab number: the server rings this phone
   /// first, then the rider; neither sees the other's number (D-058).
   Future<void> _callViaApp(Ride ride) async {
     final l10n = _l10n;

@@ -11,7 +11,7 @@ plugins {
 }
 
 android {
-    namespace = "com.rideplatform.driver"
+    namespace = "com.blincab.driver"
     // permission_handler_android is built against API 37; targetSdk stays Flutter's default.
     compileSdk = maxOf(flutter.compileSdkVersion, 37)
     ndkVersion = flutter.ndkVersion
@@ -24,7 +24,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.rideplatform.driver"
+        applicationId = "com.blincab.driver"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         // Plugins (flutter_secure_storage, firebase_messaging) need API 23+.
@@ -52,11 +52,11 @@ android {
             dimension = "env"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            manifestPlaceholders["appLabel"] = "Aavagaman Driver (dev)"
+            manifestPlaceholders["appLabel"] = "BlinCab Driver (dev)"
         }
         create("prod") {
             dimension = "env"
-            manifestPlaceholders["appLabel"] = "Aavagaman Driver"
+            manifestPlaceholders["appLabel"] = "BlinCab Driver"
         }
     }
 

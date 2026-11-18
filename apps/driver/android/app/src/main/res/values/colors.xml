@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Aavagaman brand (D-057) -->
-    <color name="launch_background">#0F3D2E</color>
-    <color name="ic_launcher_background">#15803D</color>
+    <!-- BlinCab brand (D-059): the logo's black behind the launch art and the adaptive icon -->
+    <color name="launch_background">#0A0A0A</color>
+    <color name="ic_launcher_background">#0A0A0A</color>
 </resources>

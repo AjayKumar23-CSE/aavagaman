@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import 'brand.dart';
 
-/// Rounded gradient square with the taxi mark: splash, auth header, drawer.
+/// The vehicles on a black tile (or bare on dark brand backgrounds).
 class BrandMark extends StatelessWidget {
   const BrandMark({super.key, this.size = 64, this.onGradient = false});
 
@@ -14,14 +14,14 @@ class BrandMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (onGradient) return AavagamanMark(size: size);
+    if (onGradient) return BlinCabVehicles(width: size * 1.4);
     final colors = AppColors.of(context);
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(size * 0.24),
         boxShadow: [BoxShadow(color: colors.shadow, blurRadius: size * 0.25, offset: Offset(0, size * 0.1))],
       ),
-      child: AavagamanIcon(size: size),
+      child: BlinCabIcon(size: size),
     );
   }
 }
@@ -611,7 +611,7 @@ class RingProgress extends StatelessWidget {
   final Color? color;
   final Color? track;
 
-  /// Saffron pin at the head of the arc (brand "route" style).
+  /// Yellow pin at the head of the arc (brand "route" style).
   final bool pin;
 
   /// Sweep gradient along the arc instead of a flat [color].

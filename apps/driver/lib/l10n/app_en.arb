@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
-  "appTitle": "Aavagaman Driver",
-  "appTagline": "Safar • Aapke Saath",
+  "appTitle": "BlinCab Driver",
+  "appTagline": "Bike • Cab • Auto",
   "splashQuote": "Har safar ka apna ek maqsad hota hai.",
   "homeStatusOffline": "You're offline",
   "homeStatusGoingOnline": "Going online…",
@@ -76,8 +76,8 @@
   "tripNavigate": "Navigate",
   "tripCall": "Call",
   "tripCallHint": "Calling unlocks when you arrive",
-  "tripCallVia": "Call via Aavagaman",
-  "tripNumberPrivate": "Number private · calls go via Aavagaman",
+  "tripCallVia": "Call via BlinCab",
+  "tripNumberPrivate": "Number private · calls go via BlinCab",
   "callConnecting": "Calling you from {number}. Pick up to talk to the rider.",
   "@callConnecting": {
     "placeholders": {

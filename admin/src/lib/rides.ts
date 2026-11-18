@@ -113,7 +113,7 @@ export interface Payment {
   created_at: string;
 }
 
-/** A call bridged through the Aavagaman number (D-058). */
+/** A call bridged through the BlinCab number (D-058). */
 export interface RideCall {
   id: string;
   ride_id: string;

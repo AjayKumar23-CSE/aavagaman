@@ -1,4 +1,4 @@
-package com.rideplatform.rider
+package com.blincab.driver
 
 import io.flutter.embedding.android.FlutterActivity
 

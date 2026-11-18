@@ -21,7 +21,7 @@ async function bootstrap() {
   if (env.NODE_ENV !== 'production' || env.ENABLE_DOCS) {
     const doc = SwaggerModule.createDocument(
       app,
-      new DocumentBuilder().setTitle('Ride Platform API').setVersion('1.0').addBearerAuth().build(),
+      new DocumentBuilder().setTitle('BlinCab API').setVersion('1.0').addBearerAuth().build(),
     );
     SwaggerModule.setup('docs', app, doc);
   }

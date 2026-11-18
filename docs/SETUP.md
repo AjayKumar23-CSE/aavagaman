@@ -1,4 +1,4 @@
-# Setting up Aavagaman on your machine
+# Setting up BlinCab on your machine
 
 This guide takes you from a fresh clone to a working ride on your own computer: the backend, the admin panel, and the rider and driver apps on an Android emulator or phone. Plan for about an hour the first time, most of it downloads.
 
@@ -144,7 +144,7 @@ The apps need a Google Maps key to draw maps and to search for places.
 
 1. Open [Google Cloud Console](https://console.cloud.google.com/), create a project, and turn on billing (Google's free monthly allowance covers development).
 2. Under **APIs and Services**, enable **Maps SDK for Android** and **Places API**.
-3. Under **Credentials**, create an API key. Restrict it to Android apps with the package names `com.rideplatform.rider.dev` and `com.rideplatform.driver.dev`, plus your debug signing fingerprint (the SHA-1 line printed by the command below).
+3. Under **Credentials**, create an API key. Restrict it to Android apps with the package names `com.blincab.rider.dev` and `com.blincab.driver.dev`, plus your debug signing fingerprint (the SHA-1 line printed by the command below).
 
 ```bash
 keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android

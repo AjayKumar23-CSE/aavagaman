@@ -52,7 +52,7 @@ Actions, each with a confirmation and a reason:
 
 A ride cancelled by the rider after the free window carries a cancellation fee; it is collected automatically on that rider's next completed trip and appears as a separate line on their receipt.
 
-**Calls.** Rider and driver call each other through the Aavagaman number, never directly, so neither sees the other's phone. The ride detail's **Calls** card lists every call made during the trip: who started it, the outcome (completed, no answer, busy, failed) and the talk time once the telephony provider reports it. Only admins see real phone numbers, on the Rider and Driver cards.
+**Calls.** Rider and driver call each other through the BlinCab number, never directly, so neither sees the other's phone. The ride detail's **Calls** card lists every call made during the trip: who started it, the outcome (completed, no answer, busy, failed) and the talk time once the telephony provider reports it. Only admins see real phone numbers, on the Rider and Driver cards.
 
 ## Riders
 

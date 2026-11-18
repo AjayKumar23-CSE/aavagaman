@@ -4,7 +4,7 @@ import { CallWebhooksController } from './call-webhooks.controller';
 import { DriverCallsController, RiderCallsController } from './calls.controller';
 import { CallsService } from './calls.service';
 
-/** Masked calling (D-058): rider ↔ driver calls bridged through the Aavagaman number. */
+/** Masked calling (D-058): rider ↔ driver calls bridged through the BlinCab number. */
 @Module({
   controllers: [RiderCallsController, DriverCallsController, CallWebhooksController],
   providers: [

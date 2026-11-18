@@ -13,7 +13,7 @@ export class RiderCallsController {
 
   @Post()
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Call the driver through the Aavagaman number (rings you first, then the driver)' })
+  @ApiOperation({ summary: 'Call the driver through the BlinCab number (rings you first, then the driver)' })
   call(@CurrentUser() u: AuthUser, @Param('id', ParseUUIDPipe) id: string) {
     return this.calls.request(u.id, 'rider', id);
   }
@@ -28,7 +28,7 @@ export class DriverCallsController {
 
   @Post()
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Call the rider through the Aavagaman number (rings you first, then the rider)' })
+  @ApiOperation({ summary: 'Call the rider through the BlinCab number (rings you first, then the rider)' })
   call(@CurrentUser() u: AuthUser, @Param('id', ParseUUIDPipe) id: string) {
     return this.calls.request(u.id, 'driver', id);
   }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Native launch screen: brand deep green with the mark, until Flutter draws its first frame. -->
+<!-- Native launch screen: brand black with the vehicles, until Flutter draws its first frame. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/launch_background" />
     <item>

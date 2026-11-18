@@ -97,13 +97,13 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'Aavagaman Driver'**
+  /// **'BlinCab Driver'**
   String get appTitle;
 
   /// No description provided for @appTagline.
   ///
   /// In en, this message translates to:
-  /// **'Safar • Aapke Saath'**
+  /// **'Bike • Cab • Auto'**
   String get appTagline;
 
   /// No description provided for @splashQuote.
@@ -385,13 +385,13 @@ abstract class AppLocalizations {
   /// No description provided for @tripCallVia.
   ///
   /// In en, this message translates to:
-  /// **'Call via Aavagaman'**
+  /// **'Call via BlinCab'**
   String get tripCallVia;
 
   /// No description provided for @tripNumberPrivate.
   ///
   /// In en, this message translates to:
-  /// **'Number private · calls go via Aavagaman'**
+  /// **'Number private · calls go via BlinCab'**
   String get tripNumberPrivate;
 
   /// No description provided for @callConnecting.

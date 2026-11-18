@@ -43,22 +43,24 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
     }
   }
 
-  void _whereTo(GeoPoint here) {
-    final l10n = AppLocalizations.of(context);
-    ref.read(bookingDraftProvider.notifier).setPickup(
-          RidePlace(lat: here.lat, lng: here.lng, address: l10n.homeCurrentLocation),
-        );
+  /// Pickup = the rider's GPS position, like Ola/Uber. Without a fix the
+  /// pickup stays empty (never the Connaught Place map fallback); the search
+  /// screen fills it when a fix arrives or lets the rider pick one.
+  RidePlace? _gpsPickup(GeoPoint? here) => here == null
+      ? null
+      : RidePlace(lat: here.lat, lng: here.lng, address: AppLocalizations.of(context).homeCurrentLocation);
+
+  void _whereTo(GeoPoint? here) {
+    ref.read(bookingDraftProvider.notifier).start(pickup: _gpsPickup(here));
     context.push(Routes.search);
   }
 
-  /// A recent place: current location → there, straight to Confirm.
-  void _goTo(GeoPoint here, RidePlace drop) {
-    final l10n = AppLocalizations.of(context);
-    ref.read(bookingDraftProvider.notifier)
-      ..setPickup(RidePlace(lat: here.lat, lng: here.lng, address: l10n.homeCurrentLocation))
-      ..setDrop(drop);
+  /// A recent place: current location → there, straight to Confirm (or to
+  /// the search screen for a pickup when there is no fix).
+  void _goTo(GeoPoint? here, RidePlace drop) {
+    ref.read(bookingDraftProvider.notifier).start(pickup: _gpsPickup(here), drop: drop);
     ref.read(recentPlacesProvider.notifier).add(drop);
-    context.push(Routes.confirm);
+    context.push(here == null ? Routes.search : Routes.confirm);
   }
 
   @override
@@ -200,7 +202,7 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
                     key: const Key('where-to'),
-                    onTap: () => _whereTo(here),
+                    onTap: () => _whereTo(fix?.point),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
                       child: Row(
@@ -229,7 +231,7 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        onPressed: () => _goTo(here, recents[i]),
+                        onPressed: () => _goTo(fix?.point, recents[i]),
                       ),
                     ),
                   ),

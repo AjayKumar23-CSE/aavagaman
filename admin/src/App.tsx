@@ -22,7 +22,6 @@ const NAV: { to: string; label: string; end?: boolean; badge?: 'sos' }[] = [
   { to: '/settlements', label: 'Settlements' },
   { to: '/sos', label: 'SOS', badge: 'sos' },
   { to: '/audit', label: 'Audit' },
-  { to: '/settings', label: 'Settings' },
 ];
 
 function alertText(e: AdminAlertEvent): string {
@@ -87,9 +86,9 @@ export default function App() {
     <div className="flex min-h-screen bg-gray-50">
       <aside className="sticky top-0 flex h-screen w-56 shrink-0 flex-col border-r border-gray-200 bg-white p-4">
         <div className="mb-1 flex items-center gap-2.5">
-          <img src="/logo.svg" alt="" className="h-9 w-9" />
+          <img src={`${import.meta.env.BASE_URL}logo.png`} alt="" className="h-9 w-9 rounded-lg" />
           <div>
-            <div className="text-base font-semibold leading-tight text-gray-900">Aavagaman</div>
+            <div className="text-base font-semibold leading-tight text-gray-900">Blin<span className="text-[#C99A00]">Cab</span></div>
             <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-gray-500">Admin</div>
           </div>
         </div>
@@ -109,7 +108,7 @@ export default function App() {
               end={n.end}
               className={({ isActive }) =>
                 `flex items-center justify-between rounded px-3 py-2 text-sm ${
-                  isActive ? 'bg-[#0F3D2E] text-white' : 'text-gray-700 hover:bg-gray-100'
+                  isActive ? 'bg-[#111111] text-white' : 'text-gray-700 hover:bg-gray-100'
                 }`
               }
             >

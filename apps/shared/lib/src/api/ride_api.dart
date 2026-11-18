@@ -100,7 +100,7 @@ class RideApi {
       });
 
   /// `POST /rides/:id/call` (rider) or `POST /driver/rides/:id/call` (driver):
-  /// the server rings the caller from the Aavagaman number, then bridges the
+  /// the server rings the caller from the BlinCab number, then bridges the
   /// other party (D-058). 409 `RIDE_NOT_CALLABLE`, 429 `CALL_TOO_SOON`,
   /// 502 `CALL_FAILED`, 503 `CALLS_UNAVAILABLE`.
   Future<RideCall> requestCall(String id, {bool driver = false}) => guardApi(() async {
